@@ -1,0 +1,41 @@
+? diff.txt
+Index: if_urtwn.c
+===================================================================
+RCS file: /cvsroot/src/sys/dev/usb/if_urtwn.c,v
+retrieving revision 1.107
+diff -u -p -r1.107 if_urtwn.c
+--- if_urtwn.c	1 Aug 2023 07:04:16 -0000	1.107
++++ if_urtwn.c	4 Jan 2024 18:35:23 -0000
+@@ -215,6 +215,7 @@ static const struct urtwn_dev {
+ 	/* URTWN_RTL8188E */
+ 	URTWN_RTL8188E_DEV(DLINK, DWA125D1),
+ 	URTWN_RTL8188E_DEV(ELECOM, WDC150SU2M),
++	URTWN_RTL8188E_DEV(MERCUSYS, MW150USV2),
+ 	URTWN_RTL8188E_DEV(REALTEK, RTL8188ETV),
+ 	URTWN_RTL8188E_DEV(REALTEK, RTL8188EU),
+ 	URTWN_RTL8188E_DEV(ABOCOM, RTL8188EU),
+Index: usbdevs
+===================================================================
+RCS file: /cvsroot/src/sys/dev/usb/usbdevs,v
+retrieving revision 1.811
+diff -u -p -r1.811 usbdevs
+--- usbdevs	24 Dec 2023 02:42:51 -0000	1.811
++++ usbdevs	4 Jan 2024 18:35:23 -0000
+@@ -586,6 +586,7 @@ vendor HIROSE		0x2631	Hirose Electric
+ vendor ONEPLUS		0x2717	ONEPLUS
+ vendor NHJ		0x2770	NHJ
+ vendor PLANEX		0x2c02	Planex Communications
++vendor MERCUSYS		0x2c4e	Mercusys
+ vendor VIDZMEDIA	0x3275	VidzMedia Pte Ltd
+ vendor AEI		0x3334	AEI
+ vendor HANK		0x3353	Hank Connection
+@@ -2288,6 +2289,9 @@ product MELCO WLIUCGNM		0x01a2	WLI-UC-GN
+ product MELCO WLIUCGNM2T	0x01ee	WLI-UC-GNM2T
+ product MELCO WIU2300D		0x0241	WI-U2-300D
+ 
++/* Mercusys products */
++product	MERCUSYS MW150USV2	0x0102	MW150US V2
++
+ /* Merlin products */
+ product MERLIN V620		0x1110	Merlin V620
+ 
