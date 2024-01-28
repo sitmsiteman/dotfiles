@@ -3,7 +3,6 @@
 (eval-when-compile
   (require 'use-package))
 
-
 (require 'package) 
 (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -73,14 +72,7 @@
 
 (use-package lisp-mode
   :config
-  (defun bozhidar-visit-ielm ()
-    "Switch to default `ielm' buffer.
-Start `ielm' if it's not already running."
-    (interactive)
-    (crux-start-or-switch-to 'ielm "*ielm*"))
-
   (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
-  (define-key emacs-lisp-mode-map (kbd "C-c C-z") #'bozhidar-visit-ielm)
   (define-key emacs-lisp-mode-map (kbd "C-c C-c") #'eval-defun)
   (define-key emacs-lisp-mode-map (kbd "C-c C-b") #'eval-buffer))
 
@@ -235,7 +227,6 @@ Start `ielm' if it's not already running."
   (add-hook 'scheme-mode-hook 'eglot-ensure)
   (add-hook 'common-lisp-mode-hook 'eglot-ensure)
   (add-hook 'lisp-mode-hook 'eglot-ensure)
-  (add-hook 'emacs-lisp-mode-hook 'eglot-ensure)
   (add-hook 'haskell-mode-hook 'eglot-ensure)
   (add-hook 'python-mode-hook 'eglot-ensure)
   )
@@ -251,11 +242,6 @@ Start `ielm' if it's not already running."
 (use-package smart-compile
   :ensure t
   )
-
-;; scheme, lisp stuffs
-
-;; Replace "sbcl" with the path to your implementation
-
 (setq scheme-program-name "chezscheme")
 
 ;; Enable line numbering by default
