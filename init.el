@@ -39,7 +39,7 @@
 (set-default-coding-systems 'utf-8)
 
 ;; Enable line numbering by default
-(global-display-line-numbers-mode t)
+;; (global-display-line-numbers-mode t)
 
 ;; Tabs mode
 (setq indent-tabs-mode nil)
@@ -227,6 +227,7 @@
   (add-hook 'scheme-mode-hook 'eglot-ensure)
   (add-hook 'common-lisp-mode-hook 'eglot-ensure)
   (add-hook 'lisp-mode-hook 'eglot-ensure)
+  (add-hook 'emacs-lisp-mode-hook 'eglot-ensure)
   (add-hook 'haskell-mode-hook 'eglot-ensure)
   (add-hook 'python-mode-hook 'eglot-ensure)
   )
@@ -240,14 +241,14 @@
   (global-treesit-auto-mode))
 
 (use-package smart-compile
-  :ensure t
-  )
+  :ensure t)
+
 (setq scheme-program-name "chezscheme")
 
 ;; Enable line numbering by default
-(global-display-line-numbers-mode t)
-(column-number-mode t)
-(size-indication-mode t)
+;; (global-display-line-numbers-mode t)
+;; (column-number-mode t)
+;; (size-indication-mode t)
 
 ;; enable y/n answers
 (fset 'yes-or-no-p 'y-or-n-p)
