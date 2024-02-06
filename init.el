@@ -29,7 +29,7 @@
  ;; If there is more than one, they won't work right.
  )
 ;; set Korean font (Noto Serif CJK KR)
-;; (set-face-attribute 'default nil :font "Monospace" :height 120)
+;; (set-face-attribute 'default nil :family "Monospace" :height 120)
 ;; (set-fontset-font "fontset-default" 'hangul (font-spec :family "Noto Sans CJK KR" :height 120))
 
 (setq inhibit-startup-screen t)
