@@ -110,7 +110,9 @@
 (use-package undo-tree
   :ensure t
   :config
-  (global-undo-tree-mode t))
+  (global-undo-tree-mode t)
+  (setq undo-tree-auto-save-history t)
+  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo"))))
   
 
 (use-package which-key
