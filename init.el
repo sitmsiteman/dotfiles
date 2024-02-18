@@ -18,7 +18,7 @@
  '(geiser-chez-binary "chezscheme")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(company-coq exec-path-from-shell git-timemachine magit pyvenv no-littering solarized-theme treesit-auto haskell-mode rust-mode eglot esup use-package auto-compile sicp proof-general geiser-guile geiser-mit geiser-chez geiser geiser-racket zenburn-theme company-quickhelp company scheme-complete counsel ivy quack which-key rainbow-delimiters undo-tree pretty-mode paredit smart-compile))
+   '(company-coq exec-path-from-shell git-timemachine magit no-littering solarized-theme treesit-auto haskell-mode rust-mode eglot esup use-package auto-compile sicp proof-general geiser-guile geiser-mit geiser-chez geiser geiser-racket zenburn-theme company-quickhelp company scheme-complete counsel ivy quack which-key rainbow-delimiters undo-tree pretty-mode paredit smart-compile))
  '(quack-default-program "chezscheme")
  '(quack-programs
    '("chezscheme" "chicken-csi" "chez" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi")))
