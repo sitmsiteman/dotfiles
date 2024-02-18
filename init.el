@@ -76,6 +76,14 @@
 
 ;; Packages
 
+(use-package modus-themes
+  :ensure t
+  :config
+  (load-theme 'modus-operandi t)
+  (if (display-graphic-p)
+    (enable-theme 'modus-operandi)
+    (enable-theme 'modus-operandi)))
+
 ;; (use-package solarized-theme
 ;;   :ensure t
 ;;   :config
