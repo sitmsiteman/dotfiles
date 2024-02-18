@@ -3,7 +3,7 @@
 (eval-when-compile
   (require 'use-package))
 
-(require 'package) 
+(require 'package)
 (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
@@ -18,7 +18,7 @@
  '(geiser-chez-binary "chezscheme")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(exec-path-from-shell git-timemachine magit pyvenv no-littering solarized-theme treesit-auto haskell-mode rust-mode eglot esup use-package auto-compile sicp proof-general geiser-guile geiser-mit geiser-chez geiser geiser-racket zenburn-theme company-quickhelp company scheme-complete counsel ivy quack which-key rainbow-delimiters undo-tree pretty-mode paredit smart-compile))
+   '(company-coq exec-path-from-shell git-timemachine magit pyvenv no-littering solarized-theme treesit-auto haskell-mode rust-mode eglot esup use-package auto-compile sicp proof-general geiser-guile geiser-mit geiser-chez geiser geiser-racket zenburn-theme company-quickhelp company scheme-complete counsel ivy quack which-key rainbow-delimiters undo-tree pretty-mode paredit smart-compile))
  '(quack-default-program "chezscheme")
  '(quack-programs
    '("chezscheme" "chicken-csi" "chez" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi")))
@@ -32,24 +32,29 @@
 ;; (set-face-attribute 'default nil :family "Monospace" :height 120)
 ;; (set-fontset-font "fontset-default" 'hangul (font-spec :family "Noto Sans CJK KR" :height 120))
 
+;; Miscellaneous options
+
 (setq inhibit-startup-screen t)
-;; (tool-bar-mode -1)
+(tool-bar-mode -1)
+(tab-bar-mode)
 (set-language-environment "UTF-8")
 (setq default-input-method "korean-hangul")
 (set-default-coding-systems 'utf-8)
 
+(setq scheme-program-name "chezscheme")
+
 ;; Enable line numbering by default
 ;; (global-display-line-numbers-mode t)
+(column-number-mode t)
+;; (size-indication-mode t)
 
-;; Tabs mode
-(setq indent-tabs-mode nil)
+;; enable y/n answers
+(fset 'yes-or-no-p 'y-or-n-p)
+;; deprecated
+;; (defalias 'yes-or-no #'y-or-n-p)
 
-;; quit Emacs directly even if there are running processes
-(setq confirm-kill-processes nil)
-
-;; Miscellaneous options
 (setq-default major-mode
-              (lambda ()	     ; guess major mode from file name
+              (lambda ()             ; guess major mode from file name
                 (unless buffer-file-name
                   (let ((buffer-file-name (buffer-name)))
                     (set-auto-mode)))))
@@ -58,15 +63,24 @@
 (save-place-mode t)
 (savehist-mode t)
 (recentf-mode t)
-(defalias 'yes-or-no #'y-or-n-p)
+
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
+;; Tabs mode
+(setq indent-tabs-mode nil)
+
+;; quit Emacs directly even if there are running processes
+(setq confirm-kill-processes nil)
 
 (setq load-prefer-newer t)
+
+;; Packages
 
 ;; (use-package solarized-theme
 ;;   :ensure t
 ;;   :config
-;;    (load-theme 'solarized-zenburn t) 
-;;     (if (display-graphic-p) 
+;;    (load-theme 'solarized-zenburn t)
+;;     (if (display-graphic-p)
 ;;      (enable-theme 'solarized-zenburn)
 ;;      (enable-theme 'solarized-zenburn)))
 
@@ -98,7 +112,7 @@
   :ensure t
   :config
   (setq auto-save-file-name-transforms
-	`((".*" ,(no-littering-expand-var-file-name "autosave") t)))
+        `((".*" ,(no-littering-expand-var-file-name "autosave") t)))
   )
 
 (use-package auto-compile
@@ -106,14 +120,13 @@
   :config
   (auto-compile-on-load-mode)
   (auto-compile-on-save-mode))
-  
+
 (use-package undo-tree
   :ensure t
   :config
   (global-undo-tree-mode t)
   (setq undo-tree-auto-save-history t)
   (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo"))))
-  
 
 (use-package which-key
   :ensure t
@@ -134,32 +147,12 @@
   (global-pretty-mode 1)
   (global-prettify-symbols-mode t))
 
-
 (use-package rainbow-delimiters
   :defer t
   :init
   (progn
     (add-hook 'scheme-mode 'rainbow-delimiters-mode 1)
     ))
-
- ;; (use-package paredit
- ;;   :ensure t
- ;;   :hook
- ;;   (emacs-lisp-mode . paredit-mode) ; Elisp buffers.
- ;;   (lisp-mode . paredit-mode) ; Common Lisp buffers.
- ;;   (lisp-interaction-mode . paredit-mode) ; Scratch buffers.
- ;;   (ielm-mode-hook . paredit-mode) ; ELM buffers.
- ;;   (eval-expression-minibuffer-setup . paredit-mode)
- ;;   :bind
- ;;   (:map paredit-mode-map ("<return>" . my/paredit-RET))
- ;;   :config
- ;;   (defun my/paredit-RET ()
- ;;     "Wraps `paredit-RET' to provide a sensible minibuffer experience" (interactive)
- ;;     (cond ((minibufferp)
- ;; 	    (read--expression-try-read))
- ;; 	   ((and (eq major-mode 'inferior-emacs-lisp-mode) (string-prefix-p "*ielm*" (buffer-name)))
- ;; 	    (ielm-return))
- ;; 	   (t (paredit-RET)))))
 
 (use-package paredit
   :ensure t
@@ -177,8 +170,7 @@
   (add-hook 'clojurec-mode-hook #'paredit-mode)
   (add-hook 'cider-repl-mode-hook #'paredit-mode)
   (define-key paredit-mode-map (kbd "RET") nil)
-  (define-key paredit-mode-map (kbd "C-j") 'paredit-newline)
-)
+  (define-key paredit-mode-map (kbd "C-j") 'paredit-newline))
 
 (use-package ivy
   :ensure t
@@ -186,22 +178,20 @@
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
   (setq ivy-count-format "(%d/%d) "))
- 
-(add-hook 'after-init-hook 'global-company-mode)
 
 (use-package company
   :ensure
+  :config
+  (add-hook 'after-init-hook 'global-company-mode)
   :custom
   (company-idle-delay 0.5) ;; how long to wait until popup
   ;; (company-begin-commands nil) ;; uncomment to disable popup
   :bind
   (:map company-active-map
-	      ("C-n". company-select-next)
-	      ("C-p". company-select-previous)
-	      ("M-<". company-select-first)
-	      ("M->". company-select-last)))
-
-
+              ("C-n". company-select-next)
+              ("C-p". company-select-previous)
+              ("M-<". company-select-first)
+              ("M->". company-select-last)))
 
 (use-package company-quickhelp
   ;; Quickhelp may incorrectly place tooltip towards end of buffer
@@ -210,6 +200,11 @@
   :config
   (company-quickhelp-mode)
   )
+
+(use-package company-coq
+ :ensure t
+ :config
+ (add-hook 'coq-mode-hook #'company-coq-mode))
 
 ;; setup eglot
 
@@ -234,7 +229,7 @@
   (add-hook 'python-mode-hook 'eglot-ensure)
   )
 
-;treesit
+;; treesit
 
 (use-package treesit-auto
   :demand t
@@ -244,29 +239,5 @@
 
 (use-package smart-compile
   :ensure t)
-
-(setq scheme-program-name "chezscheme")
-
-;; Enable line numbering by default
-;; (global-display-line-numbers-mode t)
-;; (column-number-mode t)
-;; (size-indication-mode t)
-
-;; enable y/n answers
-(fset 'yes-or-no-p 'y-or-n-p)
-
-;; Miscellaneous options
-(setq-default major-mode
-              (lambda ()	     ; guess major mode from file name
-                (unless buffer-file-name
-                  (let ((buffer-file-name (buffer-name)))
-                    (set-auto-mode)))))
-(setq window-resize-pixelwise t)
-(setq frame-resize-pixelwise t)
-(save-place-mode t)
-(savehist-mode t)
-(recentf-mode t)
-
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
 (setq gc-cons-threshold (* 2 1000 1000))
