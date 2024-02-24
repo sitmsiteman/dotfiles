@@ -36,12 +36,12 @@
 
 (setq inhibit-startup-screen t)
 (tool-bar-mode -1)
-(tab-bar-mode)
+(tab-bar-mode t)
 (set-language-environment "UTF-8")
 (setq default-input-method "korean-hangul")
 (set-default-coding-systems 'utf-8)
 
-(setq scheme-program-name "chezscheme")
+(setq scheme-program-name "scheme")
 
 ;; Enable line numbering by default
 ;; (global-display-line-numbers-mode t)
@@ -76,13 +76,19 @@
 
 ;; Packages
 
-(use-package modus-themes
+(use-package acme-theme
   :ensure t
   :config
-  (load-theme 'modus-operandi t)
-  (if (display-graphic-p)
-    (enable-theme 'modus-operandi)
-    (enable-theme 'modus-operandi)))
+  (load-theme 'acme t)
+  (setq acme-theme-black-fg t))
+
+;; (use-package modus-themes
+;;   :ensure t
+;;   :config
+;;   (load-theme 'modus-vivendi-tinted t)
+;;   (if (display-graphic-p)
+;;     (enable-theme 'modus-vivendi-tinted)
+;;     (enable-theme 'modus-vivendi-tinted)))
 
 (use-package lisp-mode
   :config
@@ -112,8 +118,7 @@
   :ensure t
   :config
   (setq auto-save-file-name-transforms
-        `((".*" ,(no-littering-expand-var-file-name "autosave") t)))
-  )
+        `((".*" ,(no-littering-expand-var-file-name "autosave") t))))
 
 (use-package auto-compile
   :ensure t
@@ -149,10 +154,8 @@
 
 (use-package rainbow-delimiters
   :defer t
-  :init
-  (progn
-    (add-hook 'scheme-mode 'rainbow-delimiters-mode 1)
-    ))
+  :config
+  (add-hook 'scheme-mode 'rainbow-delimiters-mode 1))
 
 (use-package paredit
   :ensure t
@@ -169,8 +172,9 @@
   (add-hook 'clojurescript-mode-hook #'paredit-mode)
   (add-hook 'clojurec-mode-hook #'paredit-mode)
   (add-hook 'cider-repl-mode-hook #'paredit-mode)
-  (define-key paredit-mode-map (kbd "RET") nil)
-  (define-key paredit-mode-map (kbd "C-j") 'paredit-newline))
+  ;; (define-key paredit-mode-map (kbd "M-j") 'paredit-newline)
+  (define-key paredit-mode-map (kbd "RET") nil))
+
 
 (use-package ivy
   :ensure t
@@ -194,26 +198,36 @@
               ("M->". company-select-last)))
 
 (use-package company-quickhelp
-  ;; Quickhelp may incorrectly place tooltip towards end of buffer
-  ;; See: https://github.com/expez/company-quickhelp/issues/72
   :ensure t
   :config
-  (company-quickhelp-mode)
-  )
+  (company-quickhelp-mode))
+
+(use-package company-anaconda
+  :ensure t
+  :config
+  (add-hook 'python-mode-hook #'company-anaconda-mode))
 
 (use-package company-coq
  :ensure t
  :config
  (add-hook 'coq-mode-hook #'company-coq-mode))
 
+(use-package company-go
+  :ensure t
+  :config
+  (add-hook 'go-mode-hook #'company-go-mode))
+
+(use-package company-ghci
+  :ensure t
+  :config
+  (add-hook 'haskell-mode-hook #'company-ghci-mode))
+
 ;; setup eglot
 
 (use-package rust-mode
-  :ensure t
-  )
+  :ensure t)
 (use-package haskell-mode
-  :ensure t
-  )
+  :ensure t)
 
 (use-package eglot
   :ensure t
@@ -221,12 +235,13 @@
   (add-hook 'rust-mode-hook 'eglot-ensure)
   (add-hook 'c-mode-hook 'eglot-ensure)
   (add-hook 'c++-mode-hook 'eglot-ensure)
+  (add-hook 'go-mode-hook 'eglot-ensure)
+  (add-hook 'rust-mode-hook 'eglot-ensure)
   (add-hook 'scheme-mode-hook 'eglot-ensure)
   (add-hook 'common-lisp-mode-hook 'eglot-ensure)
   (add-hook 'lisp-mode-hook 'eglot-ensure)
   (add-hook 'haskell-mode-hook 'eglot-ensure)
-  (add-hook 'python-mode-hook 'eglot-ensure)
-  )
+  (add-hook 'python-mode-hook 'eglot-ensure))
 
 ;; treesit
 
