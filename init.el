@@ -84,14 +84,6 @@
     (enable-theme 'modus-operandi)
     (enable-theme 'modus-operandi)))
 
-;; (use-package solarized-theme
-;;   :ensure t
-;;   :config
-;;    (load-theme 'solarized-zenburn t)
-;;     (if (display-graphic-p)
-;;      (enable-theme 'solarized-zenburn)
-;;      (enable-theme 'solarized-zenburn)))
-
 (use-package lisp-mode
   :config
   (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
@@ -232,7 +224,6 @@
   (add-hook 'scheme-mode-hook 'eglot-ensure)
   (add-hook 'common-lisp-mode-hook 'eglot-ensure)
   (add-hook 'lisp-mode-hook 'eglot-ensure)
-  (add-hook 'emacs-lisp-mode-hook 'eglot-ensure)
   (add-hook 'haskell-mode-hook 'eglot-ensure)
   (add-hook 'python-mode-hook 'eglot-ensure)
   )
