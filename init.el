@@ -82,25 +82,27 @@
   :config
   (load-theme 'acme t)
   (setq acme-theme-black-fg t)
-  (let ((fg              (if acme-theme-black-fg "#000000" "#444444"))
-	      (acme-blue-light "#E1FAFF"))
-        (custom-theme-set-faces 'acme
-				`(tab-bar                                      ((nil (:foreground ,fg :background ,acme-blue-light
-												  :box (:line-width -1)))))
-				`(tab-bar-tab                                  ((nil (:foreground ,fg :weight bold :background ,acme-blue-light))))
-				`(tab-bar-tab-inactive                         ((nil (:foreground ,fg :weight normal :background ,acme-blue-light))))
+  (let ((fg                  (if acme-theme-black-fg                       "#000000"          "#444444"))
+	(acme-blue-light "#E1FAFF"))
+    (custom-theme-set-faces 'acme
+			    `(tab-bar                                      ((nil (:foreground ,fg :background ,acme-blue-light
+											      :box (:line-width -1)))))
+			    `(tab-bar-tab                                  ((nil (:foreground ,fg :weight bold :background ,acme-blue-light))))
+			    `(tab-bar-tab-inactive                         ((nil (:foreground ,fg :weight normal :background ,acme-blue-light))))
 
-				`(tab-line                                     ((nil (:foreground ,fg :background ,acme-blue-light
-												  :box (:line-width -1)))))
-				`(tab-line-tab                                 ((nil (:inherit tab-line :foreground ,fg))))
-				`(tab-line-tab-current                         ((nil (:foreground ,fg :weight bold :background ,acme-blue-light))))
-				`(tab-line-tab-inactive                        ((nil (:foreground ,fg :weight normal :background ,acme-blue-light))))
-				`(tab-line-highlight                           ((nil (:foreground ,fg :weight normal :background ,acme-blue-light
-												  :box (:line-width -1))))) ; mouseover      
-				)
-    )  
-  (enable-theme 'acme)          
-)
+			    `(tab-line                                     ((nil (:foreground ,fg :background ,acme-blue-light
+											      :box (:line-width -1)))))
+			    `(tab-line-tab                                 ((nil (:foreground ,fg :background ,acme-blue-light))))
+			    `(tab-line-tab-current                         ((nil (:foreground ,fg :weight bold :background ,acme-blue-light))))
+			    `(tab-line-tab-inactive                        ((nil (:foreground ,fg :weight normal :background ,acme-blue-light))))
+			    `(tab-line-highlight                           ((nil (:foreground ,fg :weight normal :background ,acme-blue-light
+											      :box (:line-width -1))))) ; mouseover
+			    `(tab-line-tab-modified                        ((nil (:foreground ,fg :slant italic :background ,acme-blue-light))))
+			    )
+    )
+  (enable-theme 'acme)
+  )
+
 
 ;; (use-package modus-themes
 ;;   :ensure t
