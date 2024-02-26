@@ -160,20 +160,20 @@
   (which-key-mode 1))
 
 (use-package quack
-  :hook
-  scheme-mode
-  :init
-  (setq quack-fontify-style 'emacs))
-
-(use-package pretty-mode
   :ensure t
   :config
-  (add-hook 'scheme-mode-hook #'pretty-mode)
-  (add-hook 'lisp-mode-hook #'pretty-mode)
-  (add-hook 'emacs-lisp-mode-hook #'pretty-mode)
-  (add-hook 'inferior-scheme-mode-hook #'pretty-mode)
-  (global-pretty-mode 1)
-  (global-prettify-symbols-mode t))
+  (setq quack-fontify-style 'emacs)
+  (add-hook 'scheme-mode-hook #'quack-mode))
+
+;; (use-package pretty-mode
+;;   :ensure t
+;;   :config
+;;   (add-hook 'scheme-mode-hook #'pretty-mode)
+;;   (add-hook 'lisp-mode-hook #'pretty-mode)
+;;   (add-hook 'emacs-lisp-mode-hook #'pretty-mode)
+;;   (add-hook 'inferior-scheme-mode-hook #'pretty-mode)
+;;   (global-pretty-mode 1)
+;;   (global-prettify-symbols-mode t))
 
 (use-package rainbow-delimiters
   :defer t
