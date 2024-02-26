@@ -40,6 +40,7 @@
 (set-language-environment "UTF-8")
 (setq default-input-method "korean-hangul")
 (set-default-coding-systems 'utf-8)
+(prefer-coding-system 'utf-8)
 
 (setq scheme-program-name "scheme")
 
@@ -80,7 +81,26 @@
   :ensure t
   :config
   (load-theme 'acme t)
-  (setq acme-theme-black-fg t))
+  (setq acme-theme-black-fg t)
+  (let ((fg              (if acme-theme-black-fg "#000000" "#444444"))
+	      (acme-blue-light "#E1FAFF"))
+        (custom-theme-set-faces 'acme
+				`(tab-bar                                      ((nil (:foreground ,fg :background ,acme-blue-light
+												  :box (:line-width -1)))))
+				`(tab-bar-tab                                  ((nil (:foreground ,fg :weight bold :background ,acme-blue-light))))
+				`(tab-bar-tab-inactive                         ((nil (:foreground ,fg :weight normal :background ,acme-blue-light))))
+
+				`(tab-line                                     ((nil (:foreground ,fg :background ,acme-blue-light
+												  :box (:line-width -1)))))
+				`(tab-line-tab                                 ((nil (:inherit tab-line :foreground ,fg))))
+				`(tab-line-tab-current                         ((nil (:foreground ,fg :weight bold :background ,acme-blue-light))))
+				`(tab-line-tab-inactive                        ((nil (:foreground ,fg :weight normal :background ,acme-blue-light))))
+				`(tab-line-highlight                           ((nil (:foreground ,fg :weight normal :background ,acme-blue-light
+												  :box (:line-width -1))))) ; mouseover      
+				)
+    )  
+  (enable-theme 'acme)          
+)
 
 ;; (use-package modus-themes
 ;;   :ensure t
@@ -146,9 +166,11 @@
 
 (use-package pretty-mode
   :ensure t
-  :hook
-  scheme-mode
   :config
+  (add-hook 'scheme-mode-hook #'pretty-mode)
+  (add-hook 'lisp-mode-hook #'pretty-mode)
+  (add-hook 'emacs-lisp-mode-hook #'pretty-mode)
+  (add-hook 'inferior-scheme-mode-hook #'pretty-mode)
   (global-pretty-mode 1)
   (global-prettify-symbols-mode t))
 
