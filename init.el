@@ -83,6 +83,7 @@
   (load-theme 'acme t)
   (setq acme-theme-black-fg t)
   (let ((fg                  (if acme-theme-black-fg                       "#000000"          "#444444"))
+	(bg "#FFFFEA")
 	(acme-blue-light "#E1FAFF"))
     (custom-theme-set-faces 'acme
 			    `(tab-bar                                      ((nil (:foreground ,fg :background ,acme-blue-light
