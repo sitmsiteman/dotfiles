@@ -3,124 +3,124 @@
 (eval-when-compile
   (require 'use-package))
 
+(setq load-prefer-newer t)
+
 (require 'package)
 (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
+
+(when (not (package-installed-p 'use-package))
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(setq native-comp-deferred-compilation-deny-list '())
+(setq native-comp-async-report-warnings-errors nil)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(column-number-mode t)
  '(custom-safe-themes
-   '("fee7287586b17efbfda432f05539b58e86e059e78006ce9237b8732fde991b4c" "2dc03dfb67fbcb7d9c487522c29b7582da20766c9998aaad5e5b63b5c27eec3f" default))
- '(geiser-chez-binary "chezscheme")
+   '(default))
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(company-coq exec-path-from-shell git-timemachine magit no-littering solarized-theme treesit-auto haskell-mode rust-mode eglot esup use-package auto-compile sicp proof-general geiser-guile geiser-mit geiser-chez geiser geiser-racket zenburn-theme company-quickhelp company scheme-complete counsel ivy quack which-key rainbow-delimiters undo-tree pretty-mode paredit smart-compile))
- '(quack-default-program "chezscheme")
+   '(proof-general company-coq lisp-mode multi-vterm vterm smart-compile treesit-auto haskell-mode rust-mode company-ghci company-go company-anaconda company-quickhelp company ivy paredit quack which-key undo-tree auto-compile no-littering exec-path-from-shell git-timemachine magit delight acme-theme))
  '(quack-programs
-   '("chezscheme" "chicken-csi" "chez" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi")))
+   '("chezscheme" "chicken-csi" "chez" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))
+ '(tab-bar-mode t)
+ '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-;; set Korean font (Noto Serif CJK KR)
-;; (set-face-attribute 'default nil :family "Monospace" :height 120)
-;; (set-fontset-font "fontset-default" 'hangul (font-spec :family "Noto Sans CJK KR" :height 120))
 
-;; Miscellaneous options
+(set-face-attribute 'default nil :family "CaskaydiaMono Nerd Font" :height 120)
+(set-face-attribute 'fixed-pitch nil :family "CaskaydiaMono Nerd Font" :height 120)
+(set-face-attribute 'variable-pitch nil :family "CaskaydiaMono Nerd Font" :height 120)
+(set-fontset-font "fontset-default" 'hangul (font-spec :family "Noto Sans CJK KR" :height 120))
 
+;; utf-8
+(when (fboundp 'set-charset-priority)
+  (set-charset-priority 'unicode))
+(set-language-environment      "UTF-8")
+(prefer-coding-system          'utf-8)
+(set-buffer-file-coding-system 'utf-8)
+(set-clipboard-coding-system   'utf-8)
+(set-default-coding-systems    'utf-8)
+(set-file-name-coding-system   'utf-8)
+(set-keyboard-coding-system    'utf-8)
+(set-selection-coding-system   'utf-8)
+(set-terminal-coding-system    'utf-8)
+(setq locale-coding-system     'utf-8)
+
+;; Korean inputs
+(setq default-input-method "korean-hangul")
+
+;; Setups
 (setq inhibit-startup-screen t)
 (tool-bar-mode -1)
 (tab-bar-mode t)
-(set-language-environment "UTF-8")
-(setq default-input-method "korean-hangul")
-(set-default-coding-systems 'utf-8)
-(prefer-coding-system 'utf-8)
+(setq frame-title-format "%b - Emacs")
+(setq visible-bell 1)
 
-(setq scheme-program-name "scheme")
+;; Scheme program
+(setq scheme-program-name "chezscheme")
 
-;; Enable line numbering by default
+;; Numbering Lines
 ;; (global-display-line-numbers-mode t)
 (column-number-mode t)
 ;; (size-indication-mode t)
 
-;; enable y/n answers
+;; Enable y/n answers
 (fset 'yes-or-no-p 'y-or-n-p)
-;; deprecated
+;; Deprecated
 ;; (defalias 'yes-or-no #'y-or-n-p)
 
+;; Set major mode from file name
 (setq-default major-mode
-              (lambda ()             ; guess major mode from file name
+              (lambda ()
                 (unless buffer-file-name
                   (let ((buffer-file-name (buffer-name)))
                     (set-auto-mode)))))
+
+;; Window options
 (setq window-resize-pixelwise t)
 (setq frame-resize-pixelwise t)
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
+;; Backups
 (save-place-mode t)
 (savehist-mode t)
 (recentf-mode t)
 
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
-
-;; Tabs mode
+;; Tabs configuration
 (setq indent-tabs-mode nil)
 
 ;; quit Emacs directly even if there are running processes
 (setq confirm-kill-processes nil)
 
-(setq load-prefer-newer t)
-
 ;; Packages
-
-(use-package acme-theme
+(use-package auto-compile
   :ensure t
   :config
-  (load-theme 'acme t)
-  (setq acme-theme-black-fg t)
-  (let ((fg                  (if acme-theme-black-fg                       "#000000"          "#444444"))
-	(bg "#FFFFEA")
-	(acme-blue-light "#E1FAFF"))
-    (custom-theme-set-faces 'acme
-			    `(tab-bar                                      ((nil (:foreground ,fg :background ,acme-blue-light
-											      :box (:line-width -1)))))
-			    `(tab-bar-tab                                  ((nil (:foreground ,fg :weight bold :background ,acme-blue-light))))
-			    `(tab-bar-tab-inactive                         ((nil (:foreground ,fg :weight normal :background ,acme-blue-light))))
+  (auto-compile-on-load-mode)
+  (auto-compile-on-save-mode))
 
-			    `(tab-line                                     ((nil (:foreground ,fg :background ,acme-blue-light
-											      :box (:line-width -1)))))
-			    `(tab-line-tab                                 ((nil (:foreground ,fg :background ,acme-blue-light))))
-			    `(tab-line-tab-current                         ((nil (:foreground ,fg :weight bold :background ,acme-blue-light))))
-			    `(tab-line-tab-inactive                        ((nil (:foreground ,fg :weight normal :background ,acme-blue-light))))
-			    `(tab-line-highlight                           ((nil (:foreground ,fg :weight normal :background ,acme-blue-light
-											      :box (:line-width (0 . 1)))))) ; mouseover
-			    `(tab-line-tab-modified                        ((nil (:foreground ,fg :slant italic :background ,acme-blue-light))))
-			    )
-    )
-  (enable-theme 'acme)
-  )
-
-;; (use-package modus-themes
-;;   :ensure t
-;;   :config
-;;   (load-theme 'modus-vivendi-tinted t)
-;;   (if (display-graphic-p)
-;;     (enable-theme 'modus-vivendi-tinted)
-;;     (enable-theme 'modus-vivendi-tinted)))
+(use-package delight
+  :ensure t)
 
 (use-package lisp-mode
   :config
-  (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
   (define-key emacs-lisp-mode-map (kbd "C-c C-c") #'eval-defun)
   (define-key emacs-lisp-mode-map (kbd "C-c C-b") #'eval-buffer))
 
 (use-package ielm
-  :config
-  (add-hook 'ielm-mode-hook #'rainbow-delimiters-mode))
+  :ensure t)
 
 (use-package magit
   :ensure t
@@ -150,6 +150,7 @@
 
 (use-package undo-tree
   :ensure t
+  :delight undo-tree-mode
   :config
   (global-undo-tree-mode t)
   (setq undo-tree-auto-save-history t)
@@ -157,6 +158,7 @@
 
 (use-package which-key
   :ensure t
+  :delight which-key-mode
   :config
   (which-key-mode 1))
 
@@ -164,6 +166,7 @@
   :ensure t
   :config
   (setq quack-fontify-style 'emacs)
+  (setq quack-default-program "chezscheme")
   (add-hook 'scheme-mode-hook #'quack-mode))
 
 ;; (use-package pretty-mode
@@ -176,13 +179,10 @@
 ;;   (global-pretty-mode 1)
 ;;   (global-prettify-symbols-mode t))
 
-(use-package rainbow-delimiters
-  :defer t
-  :config
-  (add-hook 'scheme-mode 'rainbow-delimiters-mode 1))
 
 (use-package paredit
   :ensure t
+  :delight paredit-mode
   :config
   (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
   (add-hook 'eval-expression-minibuffer-setup-hook #'paredit-mode)
@@ -199,16 +199,17 @@
   ;; (define-key paredit-mode-map (kbd "M-j") 'paredit-newline)
   (define-key paredit-mode-map (kbd "RET") nil))
 
-
 (use-package ivy
   :ensure t
+  :delight ivy-mode
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
   (setq ivy-count-format "(%d/%d) "))
 
 (use-package company
-  :ensure
+  :ensure t
+  :delight company-mode
   :config
   (add-hook 'after-init-hook 'global-company-mode)
   :custom
@@ -216,10 +217,10 @@
   ;; (company-begin-commands nil) ;; uncomment to disable popup
   :bind
   (:map company-active-map
-              ("C-n". company-select-next)
-              ("C-p". company-select-previous)
-              ("M-<". company-select-first)
-              ("M->". company-select-last)))
+        ("C-n". company-select-next)
+        ("C-p". company-select-previous)
+        ("M-<". company-select-first)
+        ("M->". company-select-last)))
 
 (use-package company-quickhelp
   :ensure t
@@ -231,10 +232,13 @@
   :config
   (add-hook 'python-mode-hook #'company-anaconda-mode))
 
+(use-package proof-general
+  :ensure t)
+
 (use-package company-coq
- :ensure t
- :config
- (add-hook 'coq-mode-hook #'company-coq-mode))
+  :ensure t
+  :config
+  (add-hook 'coq-mode-hook #'company-coq-mode))
 
 (use-package company-go
   :ensure t
@@ -246,10 +250,9 @@
   :config
   (add-hook 'haskell-mode-hook #'company-ghci-mode))
 
-;; setup eglot
-
 (use-package rust-mode
   :ensure t)
+
 (use-package haskell-mode
   :ensure t)
 
@@ -267,15 +270,46 @@
   (add-hook 'haskell-mode-hook 'eglot-ensure)
   (add-hook 'python-mode-hook 'eglot-ensure))
 
-;; treesit
-
 (use-package treesit-auto
-  :demand t
+  :ensure t
   :config
   (setq treesit-auto-install 'prompt)
   (global-treesit-auto-mode))
 
 (use-package smart-compile
   :ensure t)
+
+(use-package vterm
+  :ensure t
+  :commands vterm
+  :config
+  (setq vterm-max-scrollback 10000))
+
+(use-package multi-vterm
+  :ensure t)
+
+;; Themes
+;; (use-package acme-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'acme t)
+;;   (setq acme-theme-black-fg t)
+;;   (let ((fg                  (if acme-theme-black-fg                       "#000000"          "#444444"))
+;; 	(bg "#FFFFEA")
+;; 	(acme-blue-light "#E1FAFF"))
+;;     (custom-theme-set-faces 'acme
+;; 			    `(tab-bar                                      ((nil (:foreground ,fg :background ,acme-blue-light
+;; 											      :box (:line-width -1)))))
+;; 			    `(tab-bar-tab                                  ((nil (:foreground ,fg :weight bold :background ,acme-blue-light))))
+;; 			    `(tab-bar-tab-inactive                         ((nil (:foreground ,fg :weight normal :background ,acme-blue-light))))
+;; 			    `(tab-line                                     ((nil (:foreground ,fg :background ,acme-blue-light
+;; 											      :box (:line-width -1)))))
+;; 			    `(tab-line-tab                                 ((nil (:foreground ,fg :background ,acme-blue-light))))
+;; 			    `(tab-line-tab-current                         ((nil (:foreground ,fg :weight bold :background ,acme-blue-light))))
+;; 			    `(tab-line-tab-inactive                        ((nil (:foreground ,fg :weight normal :background ,acme-blue-light))))
+;; 			    `(tab-line-highlight                           ((nil (:foreground ,fg :weight normal :background ,acme-blue-light
+;; 											      :box (:line-width (0 . 1)))))) ; mouseover
+;; 			    `(tab-line-tab-modified                        ((nil (:foreground ,fg :slant italic :background ,acme-blue-light))))))
+;;   (enable-theme 'acme))
 
 (setq gc-cons-threshold (* 2 1000 1000))
