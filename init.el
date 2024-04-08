@@ -105,6 +105,12 @@
 (setq confirm-kill-processes nil)
 
 ;; Packages
+(use-package dyalog-mode
+  :ensure t)
+
+(use-package geiser-racket
+  :ensure t)
+
 (use-package auto-compile
   :ensure t
   :config
@@ -196,6 +202,7 @@
   (add-hook 'clojurescript-mode-hook #'paredit-mode)
   (add-hook 'clojurec-mode-hook #'paredit-mode)
   (add-hook 'cider-repl-mode-hook #'paredit-mode)
+  (add-hook 'geiser-repl-mode-hook #'paredit-mode)
   ;; (define-key paredit-mode-map (kbd "M-j") 'paredit-newline)
   (define-key paredit-mode-map (kbd "RET") nil))
 
@@ -275,9 +282,6 @@
   :config
   (setq treesit-auto-install 'prompt)
   (global-treesit-auto-mode))
-
-(use-package smart-compile
-  :ensure t)
 
 (use-package vterm
   :ensure t
