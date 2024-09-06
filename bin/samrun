@@ -1,0 +1,9 @@
+#!/bin/sh
+
+export tabstop=8
+export BROWSER=firefox
+export TERM=dumb
+export PAGER=nobs
+
+[ -z $(pgrep -f plumber) ] && plumber &
+sam -a $@
