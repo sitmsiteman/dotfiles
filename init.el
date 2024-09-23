@@ -23,11 +23,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
- '(custom-safe-themes
-   '(default))
+ '(custom-safe-themes '(default))
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(proof-general company-coq lisp-mode multi-vterm vterm smart-compile treesit-auto haskell-mode rust-mode company-ghci company-go company-anaconda company-quickhelp company ivy paredit quack which-key undo-tree auto-compile no-littering exec-path-from-shell git-timemachine magit delight acme-theme))
+   '(multi-vterm vterm treesit-auto rust-mode company-ghci company-go company-coq proof-general company-anaconda company-quickhelp company ivy paredit quack which-key undo-tree no-littering exec-path-from-shell git-timemachine magit delight auto-compile geiser-racket acme-theme))
  '(quack-programs
    '("chezscheme" "chicken-csi" "chez" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))
  '(tab-bar-mode t)
@@ -37,12 +36,14 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:family "CaskaydiaMono NFM" :foundry "outline" :slant normal :weight regular :height 120 :width normal))))
+ '(fixed-pitch ((t (:family "CaskaydiaMono NFM" :foundry "outline" :slant normal :weight regular :height 120 :width normal))))
+ '(variable-pitch ((t (:family "CaskaydiaMono NFM" :foundry "outline" :slant normal :weight regular :height 120 :width normal)))))
 
-(set-face-attribute 'default nil :family "CaskaydiaMono Nerd Font" :height 120)
-(set-face-attribute 'fixed-pitch nil :family "CaskaydiaMono Nerd Font" :height 120)
-(set-face-attribute 'variable-pitch nil :family "CaskaydiaMono Nerd Font" :height 120)
-(set-fontset-font "fontset-default" 'hangul (font-spec :family "Noto Sans CJK KR" :height 120))
+;; (set-face-attribute 'default nil :family "CaskaydiaMono Nerd Font" :height 120)
+;; (set-face-attribute 'fixed-pitch nil :family "CaskaydiaMono Nerd Font" :height 120)
+;; (set-face-attribute 'variable-pitch nil :family "CaskaydiaMono Nerd Font" :height 120)
+;; (set-fontset-font "fontset-default" 'hangul (font-spec :family "Noto Sans CJK KR" :height 120))
 
 ;; utf-8
 (when (fboundp 'set-charset-priority)
@@ -104,9 +105,28 @@
 ;; quit Emacs directly even if there are running processes
 (setq confirm-kill-processes nil)
 
+;; load elisp
+(add-to-list 'load-path "~/.emacs.d/elisp/")
+
+;; General coding style.
+(setq-default show-trailing-whitespace t)
+(setq whitespace-style '(trailing lines space-before-tab)
+      whitespace-line-column 80)
+(global-whitespace-mode 1)
+(global-font-lock-mode 1)
+
+;; Lisp mode
+(define-key emacs-lisp-mode-map (kbd "C-c C-c") #'eval-defun)
+(define-key emacs-lisp-mode-map (kbd "C-c C-b") #'eval-buffer)
+
+;; OpenBSD KNF for C/C++
+(require 'openbsd-knf-style)
+(c-add-style "OpenBSD" openbsd-knf-style)
+(setq c-default-style '((c-mode . "OpenBSD")))
+
 ;; Packages
-(use-package dyalog-mode
-  :ensure t)
+(require 'use-package-ensure)
+(setq use-package-always-ensure t)
 
 (use-package geiser-racket
   :ensure t)
@@ -119,11 +139,6 @@
 
 (use-package delight
   :ensure t)
-
-(use-package lisp-mode
-  :config
-  (define-key emacs-lisp-mode-map (kbd "C-c C-c") #'eval-defun)
-  (define-key emacs-lisp-mode-map (kbd "C-c C-b") #'eval-buffer))
 
 (use-package ielm
   :ensure t)
@@ -148,12 +163,6 @@
   (setq auto-save-file-name-transforms
         `((".*" ,(no-littering-expand-var-file-name "autosave") t))))
 
-(use-package auto-compile
-  :ensure t
-  :config
-  (auto-compile-on-load-mode)
-  (auto-compile-on-save-mode))
-
 (use-package undo-tree
   :ensure t
   :delight undo-tree-mode
@@ -174,17 +183,6 @@
   (setq quack-fontify-style 'emacs)
   (setq quack-default-program "chezscheme")
   (add-hook 'scheme-mode-hook #'quack-mode))
-
-;; (use-package pretty-mode
-;;   :ensure t
-;;   :config
-;;   (add-hook 'scheme-mode-hook #'pretty-mode)
-;;   (add-hook 'lisp-mode-hook #'pretty-mode)
-;;   (add-hook 'emacs-lisp-mode-hook #'pretty-mode)
-;;   (add-hook 'inferior-scheme-mode-hook #'pretty-mode)
-;;   (global-pretty-mode 1)
-;;   (global-prettify-symbols-mode t))
-
 
 (use-package paredit
   :ensure t
@@ -271,7 +269,6 @@
   (add-hook 'c++-mode-hook 'eglot-ensure)
   (add-hook 'go-mode-hook 'eglot-ensure)
   (add-hook 'rust-mode-hook 'eglot-ensure)
-  (add-hook 'scheme-mode-hook 'eglot-ensure)
   (add-hook 'common-lisp-mode-hook 'eglot-ensure)
   (add-hook 'lisp-mode-hook 'eglot-ensure)
   (add-hook 'haskell-mode-hook 'eglot-ensure)
@@ -292,28 +289,38 @@
 (use-package multi-vterm
   :ensure t)
 
+;; (use-package pretty-mode
+;;   :ensure t
+;;   :config
+;;   (add-hook 'scheme-mode-hook #'pretty-mode)
+;;   (add-hook 'lisp-mode-hook #'pretty-mode)
+;;   (add-hook 'emacs-lisp-mode-hook #'pretty-mode)
+;;   (add-hook 'inferior-scheme-mode-hook #'pretty-mode)
+;;   (global-pretty-mode 1)
+;;   (global-prettify-symbols-mode t))
+
 ;; Themes
 ;; (use-package acme-theme
 ;;   :ensure t
 ;;   :config
 ;;   (load-theme 'acme t)
 ;;   (setq acme-theme-black-fg t)
-;;   (let ((fg                  (if acme-theme-black-fg                       "#000000"          "#444444"))
+;;   (let ((fg (if acme-theme-black-fg "#000000" "#444444"))
 ;; 	(bg "#FFFFEA")
 ;; 	(acme-blue-light "#E1FAFF"))
 ;;     (custom-theme-set-faces 'acme
-;; 			    `(tab-bar                                      ((nil (:foreground ,fg :background ,acme-blue-light
-;; 											      :box (:line-width -1)))))
-;; 			    `(tab-bar-tab                                  ((nil (:foreground ,fg :weight bold :background ,acme-blue-light))))
-;; 			    `(tab-bar-tab-inactive                         ((nil (:foreground ,fg :weight normal :background ,acme-blue-light))))
-;; 			    `(tab-line                                     ((nil (:foreground ,fg :background ,acme-blue-light
-;; 											      :box (:line-width -1)))))
-;; 			    `(tab-line-tab                                 ((nil (:foreground ,fg :background ,acme-blue-light))))
-;; 			    `(tab-line-tab-current                         ((nil (:foreground ,fg :weight bold :background ,acme-blue-light))))
-;; 			    `(tab-line-tab-inactive                        ((nil (:foreground ,fg :weight normal :background ,acme-blue-light))))
-;; 			    `(tab-line-highlight                           ((nil (:foreground ,fg :weight normal :background ,acme-blue-light
-;; 											      :box (:line-width (0 . 1)))))) ; mouseover
-;; 			    `(tab-line-tab-modified                        ((nil (:foreground ,fg :slant italic :background ,acme-blue-light))))))
+;;       `(tab-bar     ((nil (:foreground ,fg :background ,acme-blue-light
+;; 	                      :box (:line-width -1)))))
+;; 	 `(tab-bar-tab ((nil (:foreground ,fg :weight bold :background ,acme-blue-light))))
+;; 	 `(tab-bar-tab-inactive ((nil (:foreground ,fg :weight normal :background ,acme-blue-light))))
+;; 	 `(tab-line    ((nil (:foreground ,fg :background ,acme-blue-light
+;; 	                      :box (:line-width -1)))))
+;; 	 `(tab-line-tab          ((nil (:foreground ,fg :background ,acme-blue-light))))
+;; 	 `(tab-line-tab-current  ((nil (:foreground ,fg :weight bold :background ,acme-blue-light))))
+;; 	 `(tab-line-tab-inactive ((nil (:foreground ,fg :weight normal :background ,acme-blue-light))))
+;; 	 `(tab-line-highlight   ((nil (:foreground ,fg :weight normal :background ,acme-blue-light
+;; 	                                :box (:line-width (0 . 1)))))) ; mouseover
+;; 	 `(tab-line-tab-modified  ((nil (:foreground ,fg :slant italic :background ,acme-blue-light))))))
 ;;   (enable-theme 'acme))
 
 (setq gc-cons-threshold (* 2 1000 1000))
