@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Acme
+GenericName=acmerun
+Comment=acmerun
+Exec=acmerun
+Icon=
+Type=Application
+Terminal=false
+Categories=Development;
+StartupNotify=true

@@ -31,19 +31,19 @@
    '("chezscheme" "chicken-csi" "chez" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))
  '(tab-bar-mode t)
  '(tool-bar-mode nil))
-(custom-set-faces
+(custom-set-faces)
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "CaskaydiaMono NFM" :foundry "outline" :slant normal :weight regular :height 120 :width normal))))
- '(fixed-pitch ((t (:family "CaskaydiaMono NFM" :foundry "outline" :slant normal :weight regular :height 120 :width normal))))
- '(variable-pitch ((t (:family "CaskaydiaMono NFM" :foundry "outline" :slant normal :weight regular :height 120 :width normal)))))
+ ;; '(default ((t (:family "CaskaydiaMono NFM" :foundry "outline" :slant normal :weight regular :height 120 :width normal))))
+ ;; '(fixed-pitch ((t (:family "CaskaydiaMono NFM" :foundry "outline" :slant normal :weight regular :height 120 :width normal))))
+ ;; '(variable-pitch ((t (:family "CaskaydiaMono NFM" :foundry "outline" :slant normal :weight regular :height 120 :width normal)))))
 
-;; (set-face-attribute 'default nil :family "CaskaydiaMono Nerd Font" :height 120)
-;; (set-face-attribute 'fixed-pitch nil :family "CaskaydiaMono Nerd Font" :height 120)
-;; (set-face-attribute 'variable-pitch nil :family "CaskaydiaMono Nerd Font" :height 120)
-;; (set-fontset-font "fontset-default" 'hangul (font-spec :family "Noto Sans CJK KR" :height 120))
+(set-face-attribute 'default nil :family "CaskaydiaMono Nerd Font" :height 120)
+(set-face-attribute 'fixed-pitch nil :family "CaskaydiaMono Nerd Font" :height 120)
+(set-face-attribute 'variable-pitch nil :family "CaskaydiaMono Nerd Font" :height 120)
+(set-fontset-font "fontset-default" 'hangul (font-spec :family "Noto Sans CJK KR" :height 120))
 
 ;; utf-8
 (when (fboundp 'set-charset-priority)

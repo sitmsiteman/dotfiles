@@ -4,6 +4,7 @@ export tabstop=8
 export BROWSER=firefox
 export TERM=dumb
 export PAGER=nobs
+export font=/usr/local/plan9/font/pelm/unicode.8.font
 
 [ -z $(pgrep -f plumber) ] && plumber &
-9term -f $font $@
+9term -W 1024x768 rc

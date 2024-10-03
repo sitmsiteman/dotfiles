@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=9term
+GenericName=9term
+Comment=9term
+Exec=9termrun
+Icon=
+Type=Application
+Terminal=false
+Categories=Development;
+StartupNotify=true

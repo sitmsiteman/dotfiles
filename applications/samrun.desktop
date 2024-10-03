@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Sam
+GenericName=samrun
+Comment=sam
+Exec=samrun
+Icon=
+Type=Application
+Terminal=false
+Categories=Development;
+StartupNotify=true
