@@ -1,0 +1,12 @@
+! Terminal Setups
+
+xterm*termName: 		xterm-256color
+xterm*selectToClipboard:	true
+xterm*metaSendsEscape:	true
+
+! Font setups
+
+xterm*faceName: 		Noto Sans Mono
+xterm*faceNameDoublesize: 	Noto Sans Mono CJK KR
+xterm*faceSize: 		12
+xterm*utf8:		true
