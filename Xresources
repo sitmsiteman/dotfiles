@@ -10,3 +10,4 @@ xterm*faceName: 		Noto Sans Mono
 xterm*faceNameDoublesize: 	Noto Sans Mono CJK KR
 xterm*faceSize: 		12
 xterm*utf8:		true
+xterm*allowBoldFonts:   	false
