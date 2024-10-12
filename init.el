@@ -33,10 +33,15 @@
 ;; Font setups for Windows-NT / *nix
 
 (if (eq system-type 'windows-nt)
- (custom-set-faces
- '(default ((t (:family "CaskaydiaMono NFM" :foundry "outline" :slant normal :weight regular :height 120 :width normal))))
- '(fixed-pitch ((t (:family "CaskaydiaMono NFM" :foundry "outline" :slant normal :weight regular :height 120 :width normal))))
- '(variable-pitch ((t (:family "CaskaydiaMono NFM" :foundry "outline" :slant normal :weight regular :height 120 :width normal)))))
+    (progn
+      (setenv "PATH" (concat "C:\\Program Files (x86)\\GnuWin32\\bin" ";" (getenv "PATH")))
+       (custom-set-faces
+	'(default ((t (:family "CaskaydiaMono NFM" :foundry "outline"
+			       :slant normal :weight regular :height 120 :width normal))))
+	'(fixed-pitch ((t (:family "CaskaydiaMono NFM" :foundry "outline"
+				   :slant normal :weight regular :height 120 :width normal))))
+	'(variable-pitch ((t (:family "CaskaydiaMono NFM" :foundry "outline"
+				      :slant normal :weight regular :height 120 :width normal))))))
  (set-face-attribute 'default nil :family "CaskaydiaMono Nerd Font" :height 120)
  (set-face-attribute 'fixed-pitch nil :family "CaskaydiaMono Nerd Font" :height 120)
  (set-face-attribute 'variable-pitch nil :family "CaskaydiaMono Nerd Font" :height 120)
@@ -115,6 +120,7 @@
 (define-key emacs-lisp-mode-map (kbd "C-c C-b") #'eval-buffer)
 
 ;; Packages
+
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
