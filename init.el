@@ -380,3 +380,5 @@
 ;; 	                                :box (:line-width (0 . 1)))))) ; mouseover
 ;; 	 `(tab-line-tab-modified  ((nil (:foreground ,fg :slant italic :background ,acme-blue-light))))))
 ;;   (enable-theme 'acme))
+
+(setq gc-cons-threshold (* 2 1000 1000))
