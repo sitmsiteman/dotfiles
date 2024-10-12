@@ -18,11 +18,15 @@
 (setq native-comp-async-report-warnings-errors nil)
 
 (custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(custom-safe-themes '(default))
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(pdf-tools multi-vterm vterm treesit-auto rust-mode company-ghci company-go company-coq proof-general company-anaconda company-quickhelp company ivy paredit quack which-key undo-tree no-littering exec-path-from-shell git-timemachine magit delight auto-compile geiser-racket acme-theme))
+   '(company-irony pdf-tools multi-vterm vterm treesit-auto rust-mode company-ghci company-go company-coq proof-general company-anaconda company-quickhelp company ivy paredit quack which-key undo-tree no-littering exec-path-from-shell git-timemachine magit delight auto-compile geiser-racket acme-theme))
  '(quack-programs
    '("chezscheme" "chicken-csi" "chez" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))
  '(tab-bar-mode t)
@@ -255,6 +259,18 @@
   :ensure t
   :config
   (add-hook 'haskell-mode-hook #'company-ghci-mode))
+
+(use-package company-irony
+  :ensure t
+  :config
+  (add-to-list 'company-backends 'company-irony))
+
+(use-package irony
+  :ensure t
+  :config
+  (add-hook 'c++-mode-hook 'irony-mode)
+  (add-hook 'c-mode-hook 'irony-mode)
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 
 (use-package rust-mode
   :ensure t)
