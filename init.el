@@ -18,32 +18,28 @@
 (setq native-comp-async-report-warnings-errors nil)
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(custom-safe-themes '(default))
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(multi-vterm vterm treesit-auto rust-mode company-ghci company-go company-coq proof-general company-anaconda company-quickhelp company ivy paredit quack which-key undo-tree no-littering exec-path-from-shell git-timemachine magit delight auto-compile geiser-racket acme-theme))
+   '(pdf-tools multi-vterm vterm treesit-auto rust-mode company-ghci company-go company-coq proof-general company-anaconda company-quickhelp company ivy paredit quack which-key undo-tree no-littering exec-path-from-shell git-timemachine magit delight auto-compile geiser-racket acme-theme))
  '(quack-programs
    '("chezscheme" "chicken-csi" "chez" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))
  '(tab-bar-mode t)
  '(tool-bar-mode nil))
-(custom-set-faces)
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- ;; '(default ((t (:family "CaskaydiaMono NFM" :foundry "outline" :slant normal :weight regular :height 120 :width normal))))
- ;; '(fixed-pitch ((t (:family "CaskaydiaMono NFM" :foundry "outline" :slant normal :weight regular :height 120 :width normal))))
- ;; '(variable-pitch ((t (:family "CaskaydiaMono NFM" :foundry "outline" :slant normal :weight regular :height 120 :width normal)))))
 
-(set-face-attribute 'default nil :family "CaskaydiaMono Nerd Font" :height 120)
-(set-face-attribute 'fixed-pitch nil :family "CaskaydiaMono Nerd Font" :height 120)
-(set-face-attribute 'variable-pitch nil :family "CaskaydiaMono Nerd Font" :height 120)
-(set-fontset-font "fontset-default" 'hangul (font-spec :family "Noto Sans CJK KR" :height 120))
+;; Font setups for Windows-NT / *nix
+
+(if (eq system-type 'windows-nt)
+ (custom-set-faces
+ '(default ((t (:family "CaskaydiaMono NFM" :foundry "outline" :slant normal :weight regular :height 120 :width normal))))
+ '(fixed-pitch ((t (:family "CaskaydiaMono NFM" :foundry "outline" :slant normal :weight regular :height 120 :width normal))))
+ '(variable-pitch ((t (:family "CaskaydiaMono NFM" :foundry "outline" :slant normal :weight regular :height 120 :width normal)))))
+ (set-face-attribute 'default nil :family "CaskaydiaMono Nerd Font" :height 120)
+ (set-face-attribute 'fixed-pitch nil :family "CaskaydiaMono Nerd Font" :height 120)
+ (set-face-attribute 'variable-pitch nil :family "CaskaydiaMono Nerd Font" :height 120)
+ (set-fontset-font "fontset-default" 'hangul (font-spec :family "Noto Sans CJK KR" :height 120))
+)
 
 ;; utf-8
 (when (fboundp 'set-charset-priority)
@@ -285,14 +281,34 @@
   (setq treesit-auto-install 'prompt)
   (global-treesit-auto-mode))
 
-(use-package vterm
-  :ensure t
-  :commands vterm
-  :config
-  (setq vterm-max-scrollback 10000))
+;; Packages for non-windows systems
 
-(use-package multi-vterm
-  :ensure t)
+(when (not (eq system-type 'windows-nt))
+    (use-package vterm
+      :ensure t
+      :commands vterm
+      :config
+      (setq vterm-max-scrollback 10000))
+    (use-package multi-vterm
+      :ensure t))
+
+;; pdf-tools needs some tweak for windows...
+
+(if (eq system-type 'windows-nt)
+    (use-package pdf-tools
+      :ensure t
+      :init
+      (setenv "PATH" (concat "C:\\msys64\\mingw64\\bin" ";" (getenv "PATH")))
+      :mode  ("\\.pdf\\'" . pdf-view-mode)
+      :custom
+      (pdf-info-epdfinfo-program "C:\\msys64\\mingw64\\bin\\epdfinfo.exe")
+      (pdf-tools-install :no-query)
+      )
+      (use-package pdf-tools
+      :ensure t
+      :mode  ("\\.pdf\\'" . pdf-view-mode)
+      :custom
+      (pdf-tools-install :no-query)))
 
 ;; (use-package pretty-mode
 ;;   :ensure t
