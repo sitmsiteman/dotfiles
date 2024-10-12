@@ -26,9 +26,7 @@
  '(custom-safe-themes '(default))
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(eglot yasnippet-snippets ggtags pdf-tools multi-vterm vterm treesit-auto company-ghci company-go company-coq proof-general company-anaconda company-quickhelp company ivy paredit quack which-key undo-tree no-littering exec-path-from-shell git-timemachine magit delight auto-compile geiser-racket acme-theme))
- '(quack-programs
-   '("chezscheme" "chicken-csi" "chez" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))
+   '(racket-mode eglot yasnippet-snippets ggtags pdf-tools multi-vterm vterm treesit-auto company-ghci company-go company-coq proof-general company-anaconda company-quickhelp company ivy paredit quack which-key undo-tree no-littering exec-path-from-shell git-timemachine magit delight auto-compile acme-theme))
  '(tab-bar-mode t)
  '(tool-bar-mode nil))
 
@@ -105,9 +103,6 @@
 ;; quit Emacs directly even if there are running processes
 (setq confirm-kill-processes nil)
 
-;; load elisp
-(add-to-list 'load-path "~/.emacs.d/elisp/")
-
 ;; General coding style.
 (setq-default show-trailing-whitespace t)
 (setq whitespace-style '(trailing lines space-before-tab)
@@ -123,8 +118,11 @@
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
-(use-package geiser-racket
-  :ensure t)
+(use-package racket-mode
+  :ensure t
+  :config
+  (add-hook 'racket-mode-hook #'racket-xp-mode)
+  (add-to-list 'auto-mode-alist '("\\.rkt\\'" . racket-mode)))
 
 (use-package auto-compile
   :ensure t
@@ -175,9 +173,12 @@
 (use-package quack
   :ensure t
   :config
-  (setq quack-fontify-style 'emacs)
-  (setq quack-default-program "chezscheme")
-  (add-hook 'scheme-mode-hook #'quack-mode))
+  (setq quack-programs '("chezscheme" "chicken-csi" "chez" "bigloo" "csi"
+			      "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -"
+			      "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket"
+			      "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))
+  (setq quack-default-program "scheme")
+  (setq quack-fontify-style 'emacs))
 
 (use-package paredit
   :ensure t
@@ -187,6 +188,8 @@
   (add-hook 'eval-expression-minibuffer-setup-hook #'paredit-mode)
   (add-hook 'ielm-mode-hook #'paredit-mode)
   (add-hook 'scheme-mode-hook #'paredit-mode)
+  (add-hook 'racket-mode-hook #'paredit-mode)
+  (add-hook 'racket-repl-mode-hook #'paredit-mode)
   (add-hook 'lisp-mode-hook #'paredit-mode)
   (add-hook 'lisp-interaction-mode-hook #'paredit-mode)
   (add-hook 'inferior-lisp-mode-hook #'paredit-mode)
@@ -195,7 +198,6 @@
   (add-hook 'clojurescript-mode-hook #'paredit-mode)
   (add-hook 'clojurec-mode-hook #'paredit-mode)
   (add-hook 'cider-repl-mode-hook #'paredit-mode)
-  (add-hook 'geiser-repl-mode-hook #'paredit-mode)
   ;; (define-key paredit-mode-map (kbd "M-j") 'paredit-newline)
   (define-key paredit-mode-map (kbd "RET") nil))
 
@@ -220,7 +222,9 @@
   :config
   (use-package yasnippet-snippets
     :ensure t)
-  (yas-reload-all))
+  (yas-reload-all)
+  (yas-global-mode 1)
+  (global-set-key (kbd "C-c C-y") 'company-yasnippet))
 
 (defun knf-style-wip()
   `(((node-is ")") parent-bol 0)
@@ -303,7 +307,10 @@
   (add-hook 'common-lisp-mode-hook 'eglot-ensure)
   (add-hook 'lisp-mode-hook 'eglot-ensure)
   (add-hook 'haskell-ts-mode 'eglot-ensure)
-  (add-hook 'python-ts-mode-hook 'eglot-ensure))
+  (add-hook 'python-ts-mode-hook 'eglot-ensure)
+  ;; Racket language server
+  (add-to-list 'eglot-server-programs '(racket-mode . ("racket" "-l" "racket-langserver")))
+  (add-hook 'racket-mode-hook 'eglot-ensure))
 
 (use-package treesit-auto
   :ensure t
@@ -373,5 +380,3 @@
 ;; 	                                :box (:line-width (0 . 1)))))) ; mouseover
 ;; 	 `(tab-line-tab-modified  ((nil (:foreground ,fg :slant italic :background ,acme-blue-light))))))
 ;;   (enable-theme 'acme))
-
-(setq gc-cons-threshold (* 2 1000 1000))
