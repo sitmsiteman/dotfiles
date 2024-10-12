@@ -26,7 +26,7 @@
  '(custom-safe-themes '(default))
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(company-irony pdf-tools multi-vterm vterm treesit-auto rust-mode company-ghci company-go company-coq proof-general company-anaconda company-quickhelp company ivy paredit quack which-key undo-tree no-littering exec-path-from-shell git-timemachine magit delight auto-compile geiser-racket acme-theme))
+   '(eglot yasnippet-snippets ggtags pdf-tools multi-vterm vterm treesit-auto company-ghci company-go company-coq proof-general company-anaconda company-quickhelp company ivy paredit quack which-key undo-tree no-littering exec-path-from-shell git-timemachine magit delight auto-compile geiser-racket acme-theme))
  '(quack-programs
    '("chezscheme" "chicken-csi" "chez" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))
  '(tab-bar-mode t)
@@ -119,11 +119,6 @@
 (define-key emacs-lisp-mode-map (kbd "C-c C-c") #'eval-defun)
 (define-key emacs-lisp-mode-map (kbd "C-c C-b") #'eval-buffer)
 
-;; OpenBSD KNF for C/C++
-(require 'openbsd-knf-style)
-(c-add-style "OpenBSD" openbsd-knf-style)
-(setq c-default-style '((c-mode . "OpenBSD")))
-
 ;; Packages
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
@@ -212,14 +207,49 @@
   (setq ivy-use-virtual-buffers t)
   (setq ivy-count-format "(%d/%d) "))
 
+(use-package ggtags
+  :ensure t
+  :config
+  (add-hook 'c-ts-mode-hook
+            (lambda ()
+              (when (derived-mode-p 'c-ts-mode 'c++-ts-mode 'java-mode)
+		(ggtags-mode 1)))))
+
+(use-package yasnippet
+  :ensure t
+  :config
+  (use-package yasnippet-snippets
+    :ensure t)
+  (yas-reload-all))
+
+(defun knf-style-wip()
+  `(((node-is ")") parent-bol 0)
+    ((match nil "argument_list" nil 1 1) parent-bol c-ts-mode-indent-offset)
+    ((parent-is "argument_list") prev-sibling 0)
+    ((match nil "parameter_list" nil 1 1) parent-bol c-ts-mode-indent-offset)
+    ((parent-is "parameter_list") prev-sibling 0)
+
+    ,@(alist-get 'bsd (c-ts-mode--indent-styles 'c))))
+
+(use-package c-ts-mode
+  :if (treesit-language-available-p 'c)
+  :custom
+  (c-ts-mode-indent-offset 8)
+  (c-ts-mode-indent-style #'bsd)
+  :init
+  (add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(c-or-c++-mode . c-or-c++-ts-mode)))
+
 (use-package company
   :ensure t
   :delight company-mode
   :config
   (add-hook 'after-init-hook 'global-company-mode)
   :custom
-  (company-idle-delay 0.5) ;; how long to wait until popup
-  ;; (company-begin-commands nil) ;; uncomment to disable popup
+  (setq company-idle-delay 0) ;; how long to wait until popup
+  (setq company-minimum-prefix-length 3)
+  (add-to-list 'company-backends 'company-yasnippet)
   :bind
   (:map company-active-map
         ("C-n". company-select-next)
@@ -235,12 +265,12 @@
 (use-package anaconda-mode
   :ensure t
   :config
-  (add-hook 'python-mode-hook #'anaconda-mode))
+  (add-hook 'python-ts-mode-hook #'anaconda-mode))
 
 (use-package company-anaconda
   :ensure t
   :config
-  (add-hook 'python-mode-hook #'company-anaconda-mode))
+  (add-to-list 'company-backends '(company-anaconda :with company-capf)))
 
 (use-package proof-general
   :ensure t)
@@ -253,27 +283,12 @@
 (use-package company-go
   :ensure t
   :config
-  (add-hook 'go-mode-hook #'company-go-mode))
+  (add-hook 'go-ts-mode-hook #'company-go-mode))
 
 (use-package company-ghci
   :ensure t
   :config
-  (add-hook 'haskell-mode-hook #'company-ghci-mode))
-
-(use-package company-irony
-  :ensure t
-  :config
-  (add-to-list 'company-backends 'company-irony))
-
-(use-package irony
-  :ensure t
-  :config
-  (add-hook 'c++-mode-hook 'irony-mode)
-  (add-hook 'c-mode-hook 'irony-mode)
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
-
-(use-package rust-mode
-  :ensure t)
+  (add-hook 'haskell-ts-mode-hook #'company-ghci-mode))
 
 (use-package haskell-mode
   :ensure t)
@@ -281,15 +296,14 @@
 (use-package eglot
   :ensure t
   :config
-  (add-hook 'rust-mode-hook 'eglot-ensure)
-  (add-hook 'c-mode-hook 'eglot-ensure)
-  (add-hook 'c++-mode-hook 'eglot-ensure)
-  (add-hook 'go-mode-hook 'eglot-ensure)
-  (add-hook 'rust-mode-hook 'eglot-ensure)
+  (add-hook 'rust-ts-mode-hook 'eglot-ensure)
+  (add-hook 'c-ts-mode-hook 'eglot-ensure)
+  (add-hook 'c++-ts-mode-hook 'eglot-ensure)
+  (add-hook 'go-ts-mode-hook 'eglot-ensure)
   (add-hook 'common-lisp-mode-hook 'eglot-ensure)
   (add-hook 'lisp-mode-hook 'eglot-ensure)
-  (add-hook 'haskell-mode-hook 'eglot-ensure)
-  (add-hook 'python-mode-hook 'eglot-ensure))
+  (add-hook 'haskell-ts-mode 'eglot-ensure)
+  (add-hook 'python-ts-mode-hook 'eglot-ensure))
 
 (use-package treesit-auto
   :ensure t
