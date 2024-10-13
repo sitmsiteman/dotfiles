@@ -230,7 +230,7 @@
     :ensure t)
   (yas-reload-all)
   (yas-global-mode 1)
-  (global-set-key (kbd "C-c C-y") 'company-yasnippet))
+  (global-set-key (kbd "C-c y") 'company-yasnippet))
 
 (defun knf-style-wip()
   `(((node-is ")") parent-bol 0)
