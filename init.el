@@ -42,9 +42,9 @@
 				   :slant normal :weight regular :height 120 :width normal))))
 	'(variable-pitch ((t (:family "CaskaydiaMono NFM" :foundry "outline"
 				      :slant normal :weight regular :height 120 :width normal))))))
- (set-face-attribute 'default nil :family "CaskaydiaMono Nerd Font" :height 120)
- (set-face-attribute 'fixed-pitch nil :family "CaskaydiaMono Nerd Font" :height 120)
- (set-face-attribute 'variable-pitch nil :family "CaskaydiaMono Nerd Font" :height 120)
+ (set-face-attribute 'default nil :family "Noto Sans Mono" :height 120)
+ (set-face-attribute 'fixed-pitch nil :family "Noto Sans Mono" :height 120)
+ (set-face-attribute 'variable-pitch nil :family "Noto Sans Mono" :height 120)
  (set-fontset-font "fontset-default" 'hangul (font-spec :family "Noto Sans CJK KR" :height 120))
 )
 
