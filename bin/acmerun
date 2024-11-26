@@ -1,10 +1,15 @@
 #!/bin/sh
 
 export tabstop=8
-export BROWSER=firefox
+export BROWSER=firefox-esr
 export TERM=dumb
 export PAGER=nobs
-export font=/usr/local/plan9/font/lucidasans/hanunicode.8.font
+export font=/mnt/font/NotoSansCJKkr-Regular/11a/font
 
 [ -z $(pgrep -f plumber) ] && plumber &
-acme -a -b -W 1024x768 -f $font -l $HOME/acme.dump $@
+if [ -f $HOME/acme.dump ];
+then
+	acme -a -b -W 1024x768 -f $font -l $HOME/acme.dump $@
+else
+	acme -a -b -W 1024x768 -f $font $@
+fi
