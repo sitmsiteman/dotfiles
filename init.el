@@ -303,6 +303,11 @@
 (use-package haskell-mode
   :ensure t)
 
+(use-package j-mode
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.ij[rstp]$" . j-mode)))
+
 (use-package eglot
   :ensure t
   :config
