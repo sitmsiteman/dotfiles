@@ -115,12 +115,18 @@
 (global-whitespace-mode 1)
 (global-font-lock-mode 1)
 
+;; abbreviation for greek transliteration
+(add-hook 'text-mode-hook
+          (lambda ()
+            (abbrev-mode 1) ;; Enable abbrev-mode in text-mode
+	    (define-abbrev text-mode-abbrev-table "'e" "ē")
+            (define-abbrev text-mode-abbrev-table "'o" "ō"))) ;; Define abbreviation
+
 ;; Lisp mode
 (define-key emacs-lisp-mode-map (kbd "C-c C-c") #'eval-defun)
 (define-key emacs-lisp-mode-map (kbd "C-c C-b") #'eval-buffer)
 
 ;; Packages
-
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
