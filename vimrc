@@ -16,8 +16,15 @@ function! IgnoreParenIndent()
     endif
 endfun
 
+" Match NetBSD KNF (Kernel Normal Form)
+autocmd FileType c setlocal comments=sr:/*,mb:*,ex:*/ commentstring=/*\ %s\ */
+autocmd FileType c setlocal cinoptions=:0,t0,+4,(4
 
-set hlsearch
+" Highlight style violations
+match ErrorMsg /\%>80v.\+/ " Highlight lines >80 columns
+match ErrorMsg /\s\+$/     " Highlight trailing whitespace
+
+" set hlsearch
 set autoindent
 set cindent
 set cinoptions=(4200,u4200,+0.5s,*500,:0,t0,U4200
@@ -29,6 +36,11 @@ set tabstop=8
 set textwidth=80
 set bs=eol,start,indent
 set history=256
+set smartindent
+set formatoptions=croql
+set showmatch
+set ruler
+syntax on
 
 " Highlight trailing spaces
 " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
@@ -38,3 +50,6 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
+
+
+set tags+=~/.tags
