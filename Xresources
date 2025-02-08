@@ -1,3 +1,9 @@
+Xft.dpi:		96
+Xft.antialias:		true
+Xft.rgba:		rgb
+Xft.hinting:		true
+Xft.hintstyle:		hintslight
+
 ! Terminal Setups
 
 xterm*termName: 		xterm-256color
@@ -11,3 +17,14 @@ xterm*faceNameDoublesize: 	Noto Sans Mono CJK KR
 xterm*faceSize: 		12
 xterm*utf8:		true
 xterm*allowBoldFonts:   	false
+
+! URxvt setups
+
+URxvt.intensityStyles:	false
+URxvt.allow_bold:	false
+URxvt.font:		xft:Sarasa Mono K SemiBold:style=SemiBold,Regular
+URxvt.boldFont:		xft:Sarasa Mono K SemiBold:style=SemiBold,Regular
+URxvt.saveLines:	8192
+URxvt.reverseVideo:	true
+URxvt.inputMethod:	ibus
+URxvt.preeditType:	OverTheSpot
