@@ -9,12 +9,21 @@ Xft.hintstyle:			hintslight
 xterm*termName:			xterm-256color
 xterm*selectToClipboard:	true
 xterm*metaSendsEscape:		true
+xterm*rightScrollBar:		false
+xterm*scrollBar:		false
+xterm*inputMethod:		ibus
+xterm*preeditType:		OverTheSpot,Root
+xterm*geometry:			80x24
+xterm*internalBorder:		24
+xterm*cursorBlink:		true
+xterm*cursorUnderline:		false
+xterm*saveLines:		8096
 
 ! Font setups
 
-xterm*faceName:			Noto Sans Mono
-xterm*faceNameDoublesize:	Noto Sans Mono CJK KR
-xterm*faceSize:			12
+xterm*faceName:			ComicShannsMono Nerd Font:antialias=true:Bold
+xterm*faceNameDoublesize:	Sarasa Mono K Nerd Font:antialias=true:Bold
+xterm*faceSize:			14
 xterm*utf8:			true
 xterm*allowBoldFonts:	  	false
 
@@ -51,8 +60,8 @@ xterm*color15:			#A6ADC8
 
 !URxvt.intensityStyles:		false
 URxvt.allow_bold:		false
-URxvt.font:			xft:ComicShannsMono Nerd Font:size=14:Bold:antialias=true,xft:Sarasa Mono K Nerd Font:size=14:Bold:antialias=true
-!URxvt.boldFont:		xft:ComicShannsMono Nerd Font:size=14:Bold:antialias=true,xft:Sarasa Mono K Nerd Font:size=14:antialias=true
+URxvt.font:			xft:ComicShannsMono Nerd Font:size=12:Bold:antialias=true,xft:Sarasa Mono K Nerd Font:size=12:Bold:antialias=true
+!URxvt.boldFont:		xft:ComicShannsMono Nerd Font:size=12:Bold:antialias=true,xft:Sarasa Mono K Nerd Font:size=12:antialias=true
 URxvt.boldFont:
 URxvt.inputMethod:		ibus
 URxvt.preeditType:		OverTheSpot
@@ -62,7 +71,7 @@ URxvt.geometry:			80x24
 URxvt.internalBorder:		24
 URxvt.cursorBlink:		true
 URxvt.cursorUnderline:		false
-URxvt.saveline:			8096
+URxvt.saveLines:		8096
 URxvt.scrollBar:		false
 URxvt.scrollBar_right:		false
 URxvt.urgentOnBell:		true
