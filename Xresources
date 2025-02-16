@@ -50,18 +50,19 @@ xterm*color15:			#A6ADC8
 ! URxvt setups
 
 !URxvt.intensityStyles:		false
-!URxvt.allow_bold:		false
-URxvt.font:			xft:Sarasa Mono K Nerd Font:style=Bold
-URxvt.boldFont:			xft:Sarasa Mono K Nerd Font:style=Bold
+URxvt.allow_bold:		false
+URxvt.font:			xft:ComicShannsMono Nerd Font:size=14:Bold:antialias=true,xft:Sarasa Mono K Nerd Font:size=14:Bold:antialias=true
+!URxvt.boldFont:		xft:ComicShannsMono Nerd Font:size=14:Bold:antialias=true,xft:Sarasa Mono K Nerd Font:size=14:antialias=true
+URxvt.boldFont:
 URxvt.inputMethod:		ibus
 URxvt.preeditType:		OverTheSpot
-URxvt.letterSpace:		1
+URxvt.letterSpace:		0
 URxvt.lineSpace:		0
 URxvt.geometry:			80x24
 URxvt.internalBorder:		24
 URxvt.cursorBlink:		true
 URxvt.cursorUnderline:		false
-URxvt.saveline:			2048
+URxvt.saveline:			8096
 URxvt.scrollBar:		false
 URxvt.scrollBar_right:		false
 URxvt.urgentOnBell:		true
