@@ -1,5 +1,5 @@
 set nocp
-syntax on
+syntax off
 set title
 filetype plugin indent on
 
@@ -24,7 +24,7 @@ autocmd FileType c setlocal cinoptions=:0,t0,+4,(4
 match ErrorMsg /\%>80v.\+/ " Highlight lines >80 columns
 match ErrorMsg /\s\+$/     " Highlight trailing whitespace
 
-" set hlsearch
+set nohlsearch
 set autoindent
 set cindent
 set cinoptions=(4200,u4200,+0.5s,*500,:0,t0,U4200
