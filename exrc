@@ -12,6 +12,8 @@ set showmatch
 set report=1
 set extended
 set iclower
+set redraw
+set edcompatible
 
 set tags=tags\ /home/pistis/.tags
 
