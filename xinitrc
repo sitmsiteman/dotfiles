@@ -4,6 +4,7 @@
 
 xss-lock i3lock &
 xbindkeys &
+udiskie &
 
 xset s on
 xset +dpms
