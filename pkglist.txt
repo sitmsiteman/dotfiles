@@ -1,1 +1,1 @@
-git vim mutt firefox ibus ibus-hangul ibus-mozc firefox xbattbar i3 i3status xss-lock dmenu emacs chezscheme exctags racket cmake gmake libtool librsvg ffmpeg yt-dlp mpv rxvt-unicode noto-cjk-fonts estd mg go123 py311-gobject3 librsvg gh p7zip mc Libreoffice
+git vim mutt firefox ibus ibus-hangul ibus-mozc firefox xbattbar dmenu emacs chezscheme exctags racket cmake gmake libtool librsvg ffmpeg yt-dlp mpv rxvt-unicode noto-cjk-fonts estd mg go123 py311-gobject3 librsvg gh p7zip mc libreoffice fvwm stalonetray w3m
