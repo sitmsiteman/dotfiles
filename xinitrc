@@ -2,13 +2,13 @@
 
 [ -f $HOME/.Xresources ] && xrdb -merge $HOME/.Xresources
 
-xss-lock i3lock &
+xss-lock --transfer-sleep-lock i3lock &
 xbindkeys &
 udiskie &
 
 xset s on
 xset +dpms
-xset dpms 900 1200 1500
+xset dpms 300 450 600
 xset b 0
 xset r rate 250 40
 
