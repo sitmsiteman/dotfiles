@@ -2,6 +2,9 @@
 
 [ -f $HOME/.Xresources ] && xrdb -merge $HOME/.Xresources
 
+xss-lock i3lock &
+xbindkeys &
+
 xset s on
 xset +dpms
 xset dpms 900 1200 1500
