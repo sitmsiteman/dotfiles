@@ -1,23 +1,9 @@
-# Personal desktop configurations
-
 ## General setups
-
-### tmux configuration
-
-```
-set -g history-limit 10000
-```
-
-### .desktop and shell scripts
-
-### emacs configuration
 
 ### Plan9port
 
 #### fonts
-
-Use 9front font to display Hangul characters.
-
+Use modified font to display Hangul characters.
 
 #### .bashrc
 
@@ -31,8 +17,4 @@ if [ "$winid" ]; then
   alias cd=_cd
 fi
 ```
-
-## NetBSD (9.x)
-
-### Mercusys MW150US V2
 
