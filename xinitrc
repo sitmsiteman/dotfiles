@@ -14,6 +14,9 @@ xset dpms 300 450 600
 xset b 0
 xset r rate 250 40
 
+xsetroot -cursor_name left_ptr
+xsetroot -solid 'rgb:00/22/44'
+
 setxkbmap -layout kr -variant kr104
 
 export GTK_IM_MODULE=ibus
