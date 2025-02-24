@@ -5,6 +5,8 @@
 xss-lock --transfer-sleep-lock i3lock &
 xbindkeys &
 udiskie &
+cbatticon &
+telegram-desktop &
 
 xset s on
 xset +dpms
