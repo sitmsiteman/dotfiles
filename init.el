@@ -26,7 +26,7 @@
  '(custom-safe-themes '(default))
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(racket-mode eglot yasnippet-snippets ggtags pdf-tools multi-vterm vterm treesit-auto company-ghci company-go company-coq proof-general company-anaconda company-quickhelp company ivy paredit quack which-key undo-tree no-littering exec-path-from-shell git-timemachine magit delight auto-compile acme-theme))
+   '(olivetti dtrt-indent org-roam racket-mode eglot yasnippet-snippets ggtags pdf-tools multi-vterm vterm treesit-auto company-ghci company-go company-coq proof-general company-anaconda company-quickhelp company ivy paredit quack which-key undo-tree no-littering exec-path-from-shell git-timemachine magit delight auto-compile acme-theme))
  '(tab-bar-mode t)
  '(tool-bar-mode nil))
 
@@ -42,10 +42,10 @@
 				   :slant normal :weight regular :height 120 :width normal))))
 	'(variable-pitch ((t (:family "CaskaydiaMono NFM" :foundry "outline"
 				      :slant normal :weight regular :height 120 :width normal))))))
- (set-face-attribute 'default nil :family "Noto Sans Mono" :height 120)
- (set-face-attribute 'fixed-pitch nil :family "Noto Sans Mono" :height 120)
- (set-face-attribute 'variable-pitch nil :family "Noto Sans Mono" :height 120)
- (set-fontset-font "fontset-default" 'hangul (font-spec :family "Noto Sans CJK KR" :height 120))
+ (set-face-attribute 'default nil :family "ComicShannsMono Nerd Font" :height 120)
+ (set-face-attribute 'fixed-pitch nil :family "ComicShannsMono Nerd Font" :height 120)
+ (set-face-attribute 'variable-pitch nil :family "ComicShannsMono Nerd Font" :height 120)
+ (set-fontset-font "fontset-default" 'hangul (font-spec :family "Sarasa Mono K Nerd Font" :height 120))
 )
 
 ;; utf-8
@@ -95,12 +95,25 @@
 ;; Window options
 (setq window-resize-pixelwise t)
 (setq frame-resize-pixelwise t)
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+(setq frame-inhibit-implied-resize t)
+(setq pixel-scroll-precision-mode t)
+; (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
 ;; Backups
+(make-directory "~/.emacs_backups/" t)
+(make-directory "~/.emacs_autosave/" t)
+(setq backup-by-copying t)
+(setq auto-save-file-name-transforms '((".*" "~/.emacs_autosave/" t)))
+(setq backup-directory-alist '(("." . "~/.emacs_backups/")))
 (save-place-mode t)
 (savehist-mode t)
 (recentf-mode t)
+
+;; Sentences have a single space between them.
+(setq sentence-end-double-space nil)
+
+;; require newline at the end of the file
+(setq require-final-newline t)
 
 ;; Tabs configuration
 (setq indent-tabs-mode nil)
@@ -129,6 +142,17 @@
 ;; Packages
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
+
+(use-package dtrt-indent
+  :ensure t
+  :commands (dtrt-indent-global-mode
+             dtrt-indent-mode
+             dtrt-indent-adapt
+             dtrt-indent-undo
+             dtrt-indent-diagnosis
+             dtrt-indent-highlight)
+  :config
+  (dtrt-indent-global-mode))
 
 (use-package racket-mode
   :ensure t
@@ -335,6 +359,46 @@
   (setq treesit-auto-install 'prompt)
   (global-treesit-auto-mode))
 
+(use-package diogenes
+  :load-path "diogenes/"
+  :init
+  (setq diogenes-path "/usr/local/diogenes/")
+    :bind (("C-c d" . diogenes))
+    :commands (diogenes-ad-to-ol
+             diogenes-ol-to-ad
+             diogenes-utf8-to-beta
+             diogenes-beta-to-utf8))
+(use-package org
+  :ensure t
+  :bind
+  (("C-c C--" . org-mark-ring-goto)))
+
+(use-package org-roam
+  :ensure t
+  :after org
+  :init
+  (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-directory "~/Notes")
+  (org-roam-completion-everywhere t)
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n i" . org-roam-node-insert)
+         :map org-mode-map
+         ("C-M-i" . completion-at-point)
+         :map org-roam-dailies-map
+         ("Y" . org-roam-dailies-capture-yesterday)
+         ("T" . org-roam-dailies-capture-tomorrow))
+  :bind-keymap
+  ("C-c n d" . org-roam-dailies-map)
+  :config
+  (require 'org-roam-dailies) ;; Ensure the keymap is available
+  (org-roam-db-autosync-mode))
+
+(use-package olivetti
+  :ensure t
+  :config (setq olivetti-style t))
+
 ;; Packages for non-windows systems
 
 (when (not (eq system-type 'windows-nt))
@@ -344,7 +408,8 @@
       :config
       (setq vterm-max-scrollback 10000))
     (use-package multi-vterm
-      :ensure t))
+      :ensure t
+      :requires vterm))
 
 ;; pdf-tools needs some tweak for windows...
 
@@ -399,3 +464,9 @@
 ;;   (enable-theme 'acme))
 
 (setq gc-cons-threshold (* 2 1000 1000))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
