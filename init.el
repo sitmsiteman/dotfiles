@@ -32,6 +32,7 @@
 
 ;; Font setups for Windows-NT / *nix
 
+(when (display-graphic-p)
 (if (eq system-type 'windows-nt)
     (progn
       (setenv "PATH" (concat "C:\\Program Files (x86)\\GnuWin32\\bin" ";" (getenv "PATH")))
@@ -46,7 +47,7 @@
  (set-face-attribute 'fixed-pitch nil :family "ComicShannsMono Nerd Font" :height 120)
  (set-face-attribute 'variable-pitch nil :family "ComicShannsMono Nerd Font" :height 120)
  (set-fontset-font "fontset-default" 'hangul (font-spec :family "Sarasa Mono K Nerd Font" :height 120))
-)
+))
 
 ;; utf-8
 (when (fboundp 'set-charset-priority)
