@@ -25,8 +25,7 @@
  '(column-number-mode t)
  '(custom-safe-themes '(default))
  '(inhibit-startup-screen t)
- '(package-selected-packages
-   '(olivetti dtrt-indent org-roam racket-mode eglot yasnippet-snippets ggtags pdf-tools multi-vterm vterm treesit-auto company-ghci company-go company-coq proof-general company-anaconda company-quickhelp company ivy paredit quack which-key undo-tree no-littering exec-path-from-shell git-timemachine magit delight auto-compile acme-theme))
+ '(package-selected-packages nil)
  '(tab-bar-mode t)
  '(tool-bar-mode nil))
 
@@ -72,9 +71,6 @@
 (tab-bar-mode t)
 (setq frame-title-format "%b - Emacs")
 (setq visible-bell 1)
-
-;; Scheme program
-(setq scheme-program-name "chezscheme")
 
 ;; Numbering Lines
 ;; (global-display-line-numbers-mode t)
@@ -214,7 +210,8 @@
 			      "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -"
 			      "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket"
 			      "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))
-  (setq quack-default-program "scheme")
+  ;; Scheme program
+  (setq quack-default-program "chez")
   (setq quack-fontify-style 'emacs))
 
 (use-package paredit
