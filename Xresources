@@ -23,9 +23,10 @@ xterm*saveLines:		8096
 
 xterm*faceName:			DejaVuSansM Nerd Font:antialias=true
 xterm*faceNameDoublesize:	Sarasa Mono K:antialias=true
-xterm*faceSize:			12
+xterm*faceSize:			10
 xterm*utf8:			true
 xterm*allowBoldFonts:	  	false
+XTerm*visualBell: 		false
 
 ! URxvt setups
 
