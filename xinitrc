@@ -6,6 +6,7 @@ xss-lock --transfer-sleep-lock i3lock &
 xbindkeys &
 udiskie &
 cbatticon &
+volumeicon &
 telegram-desktop &
 
 xset s on
@@ -29,3 +30,4 @@ export LANG=ko_KR.UTF-8
 export LC_ALL=ko_KR.UTF-8
 
 exec fvwm
+# exec i3
