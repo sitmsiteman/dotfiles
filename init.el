@@ -70,7 +70,28 @@
 (tool-bar-mode -1)
 (tab-bar-mode t)
 (setq frame-title-format "%b - Emacs")
-(setq visible-bell 1)
+(setq visible-bell nil
+      ring-bell-function #'ignore)
+
+;; disable color
+(global-font-lock-mode -1) ;; Disable syntax highlighting everywhere
+(mapc #'disable-theme custom-enabled-themes) ;; Remove all themes
+(setq frame-background-mode nil) ;; Prevent Emacs from auto-detecting a color scheme
+(setq term-default-bg-color nil)
+(setq term-default-fg-color nil)
+
+;; Override faces to ensure they're plain
+(custom-set-faces
+ '(minibuffer-prompt ((t (:foreground "black" :background "white")))) ;; Plain black text
+ '(default ((t (:foreground "black" :background "white"))))
+ '(font-lock-comment-face ((t (:foreground "black"))))
+ '(font-lock-string-face ((t (:foreground "black"))))
+ '(font-lock-keyword-face ((t (:foreground "black"))))
+ '(font-lock-function-name-face ((t (:foreground "black"))))
+ '(font-lock-variable-name-face ((t (:foreground "black"))))
+ '(font-lock-type-face ((t (:foreground "black"))))
+ '(font-lock-constant-face ((t (:foreground "black"))))
+ '(font-lock-builtin-face ((t (:foreground "black")))))
 
 ;; Numbering Lines
 ;; (global-display-line-numbers-mode t)
