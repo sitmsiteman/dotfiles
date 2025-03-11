@@ -22,7 +22,7 @@ setxkbmap -layout kr -variant kr104
 
 export GTK_IM_MODULE=ibus
 export QT_IM_MODULE=ibus
-export XMODOFIERS=@im=ibus
+export XMODIFIERS=@im=ibus
 
 ibus-daemon -drx
 
