@@ -21,8 +21,8 @@ xterm*saveLines:		8096
 
 ! Font setups
 
-xterm*faceName:			DejaVuSansM Nerd Font:antialias=true
-xterm*faceNameDoublesize:	Sarasa Mono K:antialias=true
+xterm*faceName:			DejaVu Sans Mono:antialias=true
+xterm*faceNameDoublesize:	Noto Sans Mono CJK KR:antialias=true
 xterm*faceSize:			10
 xterm*utf8:			true
 xterm*allowBoldFonts:	  	false
@@ -32,8 +32,8 @@ XTerm*visualBell: 		false
 
 !URxvt.intensityStyles:		false
 URxvt.allow_bold:		false
-URxvt.font:			xft:DejaVuSansM Nerd Font:size=12:antialias=true,xft:Sarasa Mono K:size=12:antialias=true
-!URxvt.boldFont:		xft:DejaVuSansM Nerd Font:size=12:antialias=true,xft:Sarasa Mono K:size=12:antialias=true
+URxvt.font:			xft:DejaVu Sans Mono:size=12:antialias=true,xft:Noto Sans Mono CJK KR:size=12:antialias=true
+!URxvt.boldfont:		xft:DejaVu Sans Mono:size=12:antialias=true,xft:Noto Sans Mono CJK KR:size=12:antialias=true
 URxvt.boldFont:
 URxvt.inputMethod:		ibus
 URxvt.preeditType:		OverTheSpot
