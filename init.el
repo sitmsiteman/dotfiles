@@ -42,10 +42,10 @@
 				   :slant normal :weight regular :height 120 :width normal))))
 	'(variable-pitch ((t (:family "CaskaydiaMono NFM" :foundry "outline"
 				      :slant normal :weight regular :height 120 :width normal))))))
- (set-face-attribute 'default nil :family "DejaVuSansM Nerd Font" :height 120)
- (set-face-attribute 'fixed-pitch nil :family "DejaVuSansM Nerd Font" :height 120)
- (set-face-attribute 'variable-pitch nil :family "DejaVuSansM Nerd Font" :height 120)
- (set-fontset-font "fontset-default" 'hangul (font-spec :family "Sarasa Mono K" :height 120))
+ (set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 100)
+ (set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 100)
+ (set-face-attribute 'variable-pitch nil :family "DejaVu Sans Mono" :height 100)
+ (set-fontset-font "fontset-default" 'hangul (font-spec :family "Noto Sans Mono CJK KR" :height 100))
 ))
 
 ;; utf-8
