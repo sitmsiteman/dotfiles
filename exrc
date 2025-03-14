@@ -1,4 +1,5 @@
 set ts=8
+set noflash
 set sw=8
 set noet
 set ai
