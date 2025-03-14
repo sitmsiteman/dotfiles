@@ -14,7 +14,7 @@ xterm*scrollBar:		false
 xterm*inputMethod:		ibus
 xterm*preeditType:		OverTheSpot,Root
 xterm*geometry:			80x24
-xterm*internalBorder:		24
+xterm*internalBorder:		6
 xterm*cursorBlink:		true
 xterm*cursorUnderline:		false
 xterm*saveLines:		8096
@@ -40,7 +40,7 @@ URxvt.preeditType:		OverTheSpot
 URxvt.letterSpace:		0
 URxvt.lineSpace:		0
 URxvt.geometry:			80x24
-URxvt.internalBorder:		24
+URxvt.internalBorder:		6
 URxvt.cursorBlink:		true
 URxvt.cursorUnderline:		false
 URxvt.saveLines:		8096
