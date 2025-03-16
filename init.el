@@ -14,6 +14,24 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+;; Use quelpa to fetch diogenes.el
+
+(unless (package-installed-p 'quelpa)
+  (with-temp-buffer
+    (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
+    (eval-buffer)
+    (quelpa-self-upgrade)))
+
+(setq quelpa-upgrade-interval 7)
+
+;; integrate quelpa with use-package.
+
+(quelpa
+ '(quelpa-use-package
+   :fetcher git
+   :url "https://github.com/quelpa/quelpa-use-package.git"))
+(require 'quelpa-use-package)
+
 (setq native-comp-deferred-compilation-deny-list '())
 (setq native-comp-async-report-warnings-errors nil)
 
@@ -25,7 +43,8 @@
  '(column-number-mode t)
  '(custom-safe-themes '(default))
  '(inhibit-startup-screen t)
- '(package-selected-packages nil)
+ '(package-selected-packages
+   '(diogenes yasnippet-snippets which-key undo-tree treesit-auto racket-mode quelpa-use-package quack proof-general pdf-tools paredit org-roam olivetti no-littering multi-vterm magit j-mode ivy git-timemachine ggtags exec-path-from-shell dtrt-indent delight company-quickhelp company-go company-ghci company-coq company-anaconda auto-compile))
  '(tab-bar-mode t)
  '(tool-bar-mode nil))
 
@@ -42,10 +61,10 @@
 				   :slant normal :weight regular :height 120 :width normal))))
 	'(variable-pitch ((t (:family "CaskaydiaMono NFM" :foundry "outline"
 				      :slant normal :weight regular :height 120 :width normal))))))
- (set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 100)
- (set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 100)
- (set-face-attribute 'variable-pitch nil :family "DejaVu Sans Mono" :height 100)
- (set-fontset-font "fontset-default" 'hangul (font-spec :family "Noto Sans Mono CJK KR" :height 100))
+ (set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 120)
+ (set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 120)
+ (set-face-attribute 'variable-pitch nil :family "DejaVu Sans Mono" :height 120)
+ (set-fontset-font "fontset-default" 'hangul (font-spec :family "Noto Sans Mono CJK KR" :height 120))
 ))
 
 ;; utf-8
@@ -82,16 +101,16 @@
 
 ;; Override faces to ensure they're plain
 (custom-set-faces
- '(minibuffer-prompt ((t (:foreground "black" :background "white")))) ;; Plain black text
  '(default ((t (:foreground "black" :background "white"))))
+ '(font-lock-builtin-face ((t (:foreground "black"))))
  '(font-lock-comment-face ((t (:foreground "black"))))
- '(font-lock-string-face ((t (:foreground "black"))))
- '(font-lock-keyword-face ((t (:foreground "black"))))
- '(font-lock-function-name-face ((t (:foreground "black"))))
- '(font-lock-variable-name-face ((t (:foreground "black"))))
- '(font-lock-type-face ((t (:foreground "black"))))
  '(font-lock-constant-face ((t (:foreground "black"))))
- '(font-lock-builtin-face ((t (:foreground "black")))))
+ '(font-lock-function-name-face ((t (:foreground "black"))))
+ '(font-lock-keyword-face ((t (:foreground "black"))))
+ '(font-lock-string-face ((t (:foreground "black"))))
+ '(font-lock-type-face ((t (:foreground "black"))))
+ '(font-lock-variable-name-face ((t (:foreground "black"))))
+ '(minibuffer-prompt ((t (:foreground "black" :background "white")))))
 
 ;; Numbering Lines
 ;; (global-display-line-numbers-mode t)
@@ -140,9 +159,6 @@
 (setq confirm-kill-processes nil)
 
 ;; General coding style.
-(setq-default show-trailing-whitespace t)
-(setq whitespace-style '(trailing lines space-before-tab)
-      whitespace-line-column 80)
 (global-whitespace-mode 1)
 (global-font-lock-mode 1)
 
@@ -360,6 +376,11 @@
 (use-package eglot
   :ensure t
   :config
+  ;; make sure trailing white spaces are only shown in programming mode.
+  ;; I don't use emacs to edit my mails, so it is sufficient (atm).
+  (add-hook 'eglot--managed-mode-hook (lambda () (setq show-trailing-whitespace t)))
+  (setq whitespace-style '(trailing lines space-before-tab)
+	whitespace-line-column 80)
   (add-hook 'rust-ts-mode-hook 'eglot-ensure)
   (add-hook 'c-ts-mode-hook 'eglot-ensure)
   (add-hook 'c++-ts-mode-hook 'eglot-ensure)
@@ -378,15 +399,36 @@
   (setq treesit-auto-install 'prompt)
   (global-treesit-auto-mode))
 
+;; Use diogenes.el package to manipulate classical texts in emacs directly.
+
 (use-package diogenes
-  :load-path "diogenes/"
+  :quelpa ((diogenes :fetcher github
+		     :repo "nitardus/diogenes.el")
+	   :upgrade t)
   :init
-  (setq diogenes-path "/usr/local/diogenes/")
-    :bind (("C-c d" . diogenes))
-    :commands (diogenes-ad-to-ol
+  (setq diogenes-path "/usr/local/diogenes")
+  :config
+  (custom-set-variables
+   
+   ;; Prebuilt binary doesn't have grc.lsj.logeion.xml files so I don't use it.
+   
+   '(diogenes-preferred-lsj-file "grc.lsj.xml"))
+
+  ;; Use Gentium Plus fonts in diogenes browser mode.
+  
+  (defun my-greek-face ()
+   (interactive)
+   (setq buffer-face-mode-face '(:family "Gentium Plus" :height 120))
+   (buffer-face-mode))
+  (add-hook 'diogenes-browser-mode-hook 'my-greek-face)
+  (add-hook 'diogenes-lookup-mode-hook 'my-greek-face)
+
+  :bind (("C-c C-d g" . diogenes))
+  :commands (diogenes-ad-to-ol
              diogenes-ol-to-ad
              diogenes-utf8-to-beta
              diogenes-beta-to-utf8))
+
 (use-package org
   :ensure t
   :bind
@@ -483,9 +525,4 @@
 ;;   (enable-theme 'acme))
 
 (setq gc-cons-threshold (* 2 1000 1000))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
