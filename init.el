@@ -101,7 +101,8 @@
 
 ;; Override faces to ensure they're plain
 (custom-set-faces
- '(default ((t (:foreground "black" :background "white"))))
+ '(default ((((type tty)))
+	    (t (:foreground "black" :background "white"))))
  '(font-lock-builtin-face ((t (:foreground "black"))))
  '(font-lock-comment-face ((t (:foreground "black"))))
  '(font-lock-constant-face ((t (:foreground "black"))))
