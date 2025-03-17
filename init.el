@@ -420,10 +420,14 @@
    (interactive)
    (setq buffer-face-mode-face '(:family "Gentium Plus" :height 120))
    (buffer-face-mode))
+  
   (add-hook 'diogenes-browser-mode-hook 'my-greek-face)
   (add-hook 'diogenes-lookup-mode-hook 'my-greek-face)
 
-  :bind (("C-c C-d g" . diogenes))
+  :bind (("C-c C-d g" . diogenes)
+	 (:map diogenes-browser-mode-map
+	       (("C-c C-w" . diogenes-parse-greek))))
+
   :commands (diogenes-ad-to-ol
              diogenes-ol-to-ad
              diogenes-utf8-to-beta
