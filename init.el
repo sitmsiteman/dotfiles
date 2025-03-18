@@ -14,6 +14,12 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+(use-package no-littering
+  :ensure t
+  :config
+  (setq auto-save-file-name-transforms
+        `((".*" ,(no-littering-expand-var-file-name "autosave") t))))
+
 ;; Use quelpa to fetch diogenes.el
 
 (unless (package-installed-p 'quelpa)
@@ -228,12 +234,6 @@
   :config
   (when (memq window-system '(mac ns))
     (exec-path-from-shell-initialize)))
-
-(use-package no-littering
-  :ensure t
-  :config
-  (setq auto-save-file-name-transforms
-        `((".*" ,(no-littering-expand-var-file-name "autosave") t))))
 
 (use-package undo-fu
   :ensure t
