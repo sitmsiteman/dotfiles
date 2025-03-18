@@ -286,6 +286,10 @@
   :delight ivy-mode
   :config
   (ivy-mode 1)
+  (setq ivy-initial-inputs-alist nil)
+  (setq ivy-re-builders-alist
+      '((ivy-switch-buffer . ivy--regex-plus)
+        (t . ivy--regex-fuzzy)))
   (setq ivy-use-virtual-buffers t)
   (setq ivy-count-format "(%d/%d) "))
 
@@ -414,7 +418,7 @@
   :quelpa ((diogenes :fetcher github
 		     :repo "nitardus/diogenes.el"))
   :init
-  (setq diogenes-path "diogenes")
+  (setq diogenes-path (expand-file-name "~/diogenes"))
   ;; Prebuilt binary doesn't have grc.lsj.logeion.xml files so I don't use it.
   (setq diogenes-preferred-lsj-file "grc.lsj.xml")
   :config
