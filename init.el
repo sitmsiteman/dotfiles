@@ -252,7 +252,11 @@
 			      "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket"
 			      "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))
   ;; Scheme program
-  (setq quack-default-program "chez")
+  (setq my-quack-chez-executables (list "chez" "chezscheme" "scheme" "petite"))
+  (defun my-quack-find-chez-executables (my-quack-executables)
+    (cl-find-if #'executable-find my-quack-executables))
+  (setq quack-default-program
+	(my-quack-find-chez-executables my-quack-chez-executables))
   (setq quack-fontify-style 'emacs))
 
 (use-package paredit
@@ -420,13 +424,13 @@
 
   ;; Use Gentium Plus fonts in diogenes browser mode.
   
-  (defun my-greek-face ()
+  (defun my-diogenes-greek-face ()
    (interactive)
    (setq buffer-face-mode-face '(:family "Gentium Plus" :height 120))
    (buffer-face-mode))
   
-  (add-hook 'diogenes-browser-mode-hook 'my-greek-face)
-  (add-hook 'diogenes-lookup-mode-hook 'my-greek-face)
+  (add-hook 'diogenes-browser-mode-hook 'my-diogenes-greek-face)
+  (add-hook 'diogenes-lookup-mode-hook 'my-diogenes-greek-face)
 
   :bind (("C-c C-d g" . diogenes)
 	 (:map diogenes-browser-mode-map
