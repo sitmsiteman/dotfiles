@@ -23,6 +23,7 @@
     (quelpa-self-upgrade)))
 
 (setq quelpa-upgrade-interval 7)
+(add-hook #'after-init-hook #'quelpa-upgrade-all-maybe)
 
 ;; integrate quelpa with use-package.
 
@@ -411,26 +412,21 @@
 
 (use-package diogenes
   :quelpa ((diogenes :fetcher github
-		     :repo "nitardus/diogenes.el")
-	   :upgrade t)
+		     :repo "nitardus/diogenes.el"))
   :init
-  (setq diogenes-path "/usr/local/diogenes")
+  (setq diogenes-path "diogenes")
+  ;; Prebuilt binary doesn't have grc.lsj.logeion.xml files so I don't use it.
+  (setq diogenes-preferred-lsj-file "grc.lsj.xml")
   :config
-  (custom-set-variables
-   
-   ;; Prebuilt binary doesn't have grc.lsj.logeion.xml files so I don't use it.
-   
-   '(diogenes-preferred-lsj-file "grc.lsj.xml"))
-
   ;; Use Gentium Plus fonts in diogenes browser mode.
-  
   (defun my-diogenes-greek-face ()
    (interactive)
-   (setq buffer-face-mode-face '(:family "Gentium Plus" :height 120))
+   (setq buffer-face-mode-face '(:family "Gentium Plus" :height 140))
    (buffer-face-mode))
   
   (add-hook 'diogenes-browser-mode-hook 'my-diogenes-greek-face)
   (add-hook 'diogenes-lookup-mode-hook 'my-diogenes-greek-face)
+  (add-hook 'diogenes-analysis-mode-hook 'my-diogenes-greek-face)
 
   :bind (("C-c C-d g" . diogenes)
 	 (:map diogenes-browser-mode-map
