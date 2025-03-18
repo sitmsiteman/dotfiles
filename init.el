@@ -37,15 +37,11 @@
 (setq native-comp-async-report-warnings-errors nil)
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(custom-safe-themes '(default))
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(diogenes yasnippet-snippets which-key undo-tree treesit-auto racket-mode quelpa-use-package quack proof-general pdf-tools paredit org-roam olivetti no-littering multi-vterm magit j-mode ivy git-timemachine ggtags exec-path-from-shell dtrt-indent delight company-quickhelp company-go company-ghci company-coq company-anaconda auto-compile))
+   '(auto-olivetti diogenes yasnippet-snippets which-key undo-tree treesit-auto racket-mode quelpa-use-package quack proof-general pdf-tools paredit org-roam olivetti no-littering multi-vterm magit j-mode ivy git-timemachine ggtags exec-path-from-shell dtrt-indent delight company-quickhelp company-go company-ghci company-coq company-anaconda auto-compile))
  '(tab-bar-mode t)
  '(tool-bar-mode nil))
 
@@ -102,8 +98,7 @@
 
 ;; Override faces to ensure they're plain
 (custom-set-faces
- '(default ((((type tty)))
-	    (t (:foreground "black" :background "white"))))
+ '(default ((((type tty))) (t (:foreground "black" :background "white"))))
  '(font-lock-builtin-face ((t (:foreground "black"))))
  '(font-lock-comment-face ((t (:foreground "black"))))
  '(font-lock-constant-face ((t (:foreground "black"))))
@@ -431,7 +426,10 @@
   (add-hook 'diogenes-browser-mode-hook 'my-diogenes-greek-face)
   (add-hook 'diogenes-lookup-mode-hook 'my-diogenes-greek-face)
   (add-hook 'diogenes-analysis-mode-hook 'my-diogenes-greek-face)
-
+  (add-hook 'diogenes-search-mode-hook 'my-diogenes-greek-face)
+  (add-hook 'diogenes-corpus-mode-hook 'my-diogenes-greek-face)
+  (add-hook 'diogenes-corpus-edit-mode-hook 'my-diogenes-greek-face)
+  
   :bind (("C-c C-d g" . diogenes)
 	 (:map diogenes-browser-mode-map
 	       (("C-c C-w" . diogenes-parse-greek))))
@@ -470,7 +468,21 @@
 
 (use-package olivetti
   :ensure t
-  :config (setq olivetti-style t))
+  :config
+  (setq olivetti-style 'fancy)
+  :custom
+  (olivetti-body-width 130))
+
+(use-package auto-olivetti
+  :quelpa (auto-olivetti :fetcher git
+			 :url "https://sr.ht/~ashton314/auto-olivetti")
+  :config
+  (auto-olivetti-mode)
+  :custom
+  (auto-olivetti-enabled-modes
+   '(text-mode diogenes-browser-mode diogenes-search-mode
+	       diogenes-corpus-mode diogenes-corpus-edit-mode
+	       diogenes-analysis-mode diogenes-lookup-mode)))
 
 ;; Packages for non-windows systems
 
