@@ -37,11 +37,15 @@
 (setq native-comp-async-report-warnings-errors nil)
 
 (custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(custom-safe-themes '(default))
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(auto-olivetti diogenes yasnippet-snippets which-key undo-tree treesit-auto racket-mode quelpa-use-package quack proof-general pdf-tools paredit org-roam olivetti no-littering multi-vterm magit j-mode ivy git-timemachine ggtags exec-path-from-shell dtrt-indent delight company-quickhelp company-go company-ghci company-coq company-anaconda auto-compile))
+   '(evil-collection evil undo-fu-session undo-fu auto-olivetti diogenes yasnippet-snippets which-key undo-tree treesit-auto racket-mode quelpa-use-package quack proof-general pdf-tools paredit org-roam olivetti no-littering multi-vterm magit j-mode ivy git-timemachine ggtags exec-path-from-shell dtrt-indent delight company-quickhelp company-go company-ghci company-coq company-anaconda auto-compile))
  '(tab-bar-mode t)
  '(tool-bar-mode nil))
 
@@ -98,6 +102,10 @@
 
 ;; Override faces to ensure they're plain
 (custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(default ((((type tty))) (t (:foreground "black" :background "white"))))
  '(font-lock-builtin-face ((t (:foreground "black"))))
  '(font-lock-comment-face ((t (:foreground "black"))))
@@ -136,6 +144,7 @@
 ;; Backups
 (make-directory "~/.emacs_backups/" t)
 (make-directory "~/.emacs_autosave/" t)
+(make-directory "~/.emacs.d/undo/" t)
 (setq backup-by-copying t)
 (setq auto-save-file-name-transforms '((".*" "~/.emacs_autosave/" t)))
 (setq backup-directory-alist '(("." . "~/.emacs_backups/")))
@@ -226,13 +235,45 @@
   (setq auto-save-file-name-transforms
         `((".*" ,(no-littering-expand-var-file-name "autosave") t))))
 
-(use-package undo-tree
+(use-package undo-fu
   :ensure t
-  :delight undo-tree-mode
+  :delight undo-fu-mode
   :config
-  (global-undo-tree-mode t)
-  (setq undo-tree-auto-save-history t)
-  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo"))))
+  (global-unset-key (kbd "C-z"))
+  (global-set-key (kbd "C-z")   'undo-fu-only-undo)
+  (global-set-key (kbd "C-S-z") 'undo-fu-only-redo))
+
+(use-package undo-fu-session
+  :ensure t
+  :after
+  undo-fu
+  :config
+  (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
+  :custom
+  (undo-fu-session-directory (expand-file-name "~/.emacs.d/undo")))
+
+(undo-fu-session-global-mode)
+
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-want-keybinding nil)
+  (setq evil-undo-system 'undo-fu)
+  (setq evil-search-module 'evil-search)
+  (setq evil-ex-complete-emacs-commands nil)
+  (setq evil-vsplit-window-right t)
+  (setq evil-split-window-below t)
+  (setq evil-shift-round nil)
+  (setq evil-want-C-u-scroll t)
+  :config
+  (evil-mode 1))
+
+(use-package evil-collection
+  :ensure t
+  :after evil
+  :config
+  (setq evil-want-integration t)
+  (evil-collection-init))
 
 (use-package which-key
   :ensure t
