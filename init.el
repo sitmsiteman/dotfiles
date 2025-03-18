@@ -163,6 +163,9 @@
 (global-whitespace-mode 1)
 (global-font-lock-mode 1)
 
+;; text replaces the selection if the selection is active
+(delete-selection-mode 1)
+
 ;; abbreviation for greek transliteration
 (add-hook 'text-mode-hook
           (lambda ()
