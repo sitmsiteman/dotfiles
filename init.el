@@ -51,7 +51,7 @@
  '(custom-safe-themes '(default))
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(evil-collection evil undo-fu-session undo-fu auto-olivetti diogenes yasnippet-snippets which-key undo-tree treesit-auto racket-mode quelpa-use-package quack proof-general pdf-tools paredit org-roam olivetti no-littering multi-vterm magit j-mode ivy git-timemachine ggtags exec-path-from-shell dtrt-indent delight company-quickhelp company-go company-ghci company-coq company-anaconda auto-compile))
+   '(undo-fu-session undo-fu auto-olivetti diogenes yasnippet-snippets which-key undo-tree treesit-auto racket-mode quelpa-use-package quack proof-general pdf-tools paredit org-roam olivetti no-littering multi-vterm magit j-mode ivy git-timemachine ggtags exec-path-from-shell dtrt-indent delight company-quickhelp company-go company-ghci company-coq company-anaconda auto-compile))
  '(tab-bar-mode t)
  '(tool-bar-mode nil))
 
@@ -90,6 +90,7 @@
 
 ;; Korean inputs
 (setq default-input-method "korean-hangul")
+(global-set-key (kbd "<Hangul>") 'toggle-input-method)
 
 ;; Setups
 (setq inhibit-startup-screen t)
@@ -177,12 +178,27 @@
 ;; text replaces the selection if the selection is active
 (delete-selection-mode 1)
 
-;; abbreviation for greek transliteration
-(add-hook 'text-mode-hook
-          (lambda ()
-            (abbrev-mode 1) ;; Enable abbrev-mode in text-mode
-	    (define-abbrev text-mode-abbrev-table "'e" "ē")
-            (define-abbrev text-mode-abbrev-table "'o" "ō"))) ;; Define abbreviation
+;; Text-mode options
+;; shortcut for greek transliteration
+(define-key text-mode-map (kbd "C-c C-r") #'fill-region)
+(define-key text-mode-map (kbd "C-c C-e")
+            (lambda ()
+	      (interactive)
+              (insert "ē")))
+(define-key text-mode-map (kbd "C-c C-o")
+            (lambda ()
+	      (interactive)
+              (insert "ō")))
+(add-hook 'text-mode-hook #'auto-fill-mode)
+
+;; Define abbreviation
+;; 
+;; (add-hook 'text-mode-hook
+;;           (lambda ()
+;;             (abbrev-mode 1) ;; Enable abbrev-mode in text-mode
+;; 	    (define-abbrev text-mode-abbrev-table "'e" "ē")
+;;             (define-abbrev text-mode-abbrev-table "'o" "ō")))
+
 
 ;; Lisp mode
 (define-key emacs-lisp-mode-map (kbd "C-c C-c") #'eval-defun)
