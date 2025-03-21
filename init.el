@@ -511,7 +511,7 @@
 
 (use-package auto-olivetti
   :quelpa (auto-olivetti :fetcher git
-			 :url "https://sr.ht/~ashton314/auto-olivetti")
+			 :url "https://git.sr.ht/~ashton314/auto-olivetti")
   :config
   (auto-olivetti-mode)
   :custom
