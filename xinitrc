@@ -26,6 +26,7 @@ udiskie &
 cbatticon &
 volumeicon &
 telegram-desktop &
+dunst &
 
-exec fvwm
-# exec i3
+# exec fvwm
+exec i3
