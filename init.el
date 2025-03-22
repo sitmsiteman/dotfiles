@@ -448,6 +448,7 @@
 (use-package diogenes
   :quelpa ((diogenes :fetcher github
 		     :repo "nitardus/diogenes.el"))
+  :after quelpa
   :init
   (setq diogenes-path (expand-file-name "~/diogenes"))
   ;; Prebuilt binary doesn't have grc.lsj.logeion.xml files so I don't use it.
