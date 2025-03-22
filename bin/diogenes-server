@@ -1,0 +1,3 @@
+#!/bin/sh
+DIOGENES_LOCATION="$HOME/diogenes"
+$DIOGENES_LOCATION/server/diogenes-server.pl
