@@ -51,7 +51,20 @@
  '(custom-safe-themes '(default))
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(undo-fu-session undo-fu auto-olivetti diogenes yasnippet-snippets which-key undo-tree treesit-auto racket-mode quelpa-use-package quack proof-general pdf-tools paredit org-roam olivetti no-littering multi-vterm magit j-mode ivy git-timemachine ggtags exec-path-from-shell dtrt-indent delight company-quickhelp company-go company-ghci company-coq company-anaconda auto-compile))
+   '(undo-fu-session undo-fu auto-olivetti diogenes yasnippet-snippets
+		     which-key undo-tree treesit-auto racket-mode
+		     quelpa-use-package quack proof-general pdf-tools
+		     paredit org-roam olivetti no-littering
+		     multi-vterm magit j-mode ivy git-timemachine
+		     ggtags exec-path-from-shell dtrt-indent delight
+		     company-quickhelp company-go company-ghci
+		     company-coq company-anaconda auto-compile))
+ '(quack-programs
+   '("chez-scheme" "bigloo" "chez" "chezscheme" "chicken-csi" "csi"
+     "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -"
+     "guile" "kawa" "mit-scheme" "petite" "racket"
+     "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc"
+     "stklos" "sxi"))
  '(tab-bar-mode t)
  '(tool-bar-mode nil))
 
@@ -277,6 +290,10 @@
   (which-key-mode 1))
 
 (use-package quack
+  :quelpa ((quack :fetcher github
+		  :repo "sitmsiteman/quack"
+		  :branch "testing")
+	   :upgrade t)
   :ensure t
   :config
   (setq quack-programs '("chezscheme" "chicken-csi" "chez" "bigloo" "csi"
