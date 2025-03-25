@@ -60,11 +60,11 @@
 		     company-quickhelp company-go company-ghci
 		     company-coq company-anaconda auto-compile))
  '(quack-programs
-   '("chez-scheme" "bigloo" "chez" "chezscheme" "chicken-csi" "csi"
+   '("chez-scheme" "chezscheme" "chicken-csi" "chez" "bigloo" "csi"
      "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -"
-     "guile" "kawa" "mit-scheme" "petite" "racket"
-     "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc"
-     "stklos" "sxi"))
+     "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket"
+     "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))
+ '(quack-smart-open-paren-p nil)
  '(tab-bar-mode t)
  '(tool-bar-mode nil))
 
@@ -301,7 +301,8 @@
 			      "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket"
 			      "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))
   ;; Scheme program
-  (setq my-quack-chez-executables (list "chez" "chezscheme" "scheme" "petite"))
+  (setq my-quack-chez-executables (list "chez" "chezscheme" "scheme"
+  					"chez-scheme" "petite"))
   (defun my-quack-find-chez-executables (my-quack-executables)
     (cl-find-if #'executable-find my-quack-executables))
   (setq quack-default-program
