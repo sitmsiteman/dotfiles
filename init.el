@@ -487,7 +487,7 @@
   
   :bind (("C-c C-d g" . diogenes)
 	 (:map diogenes-browser-mode-map
-	       (("C-c C-w" . diogenes-parse-greek))))
+	       (("C-c C-d w" . diogenes-parse-greek))))
 
   :commands (diogenes-ad-to-ol
              diogenes-ol-to-ad
