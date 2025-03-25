@@ -21,3 +21,11 @@
 # Brightness Down
 "brightnessctl s 5%-"
    XF86MonBrightnessDown
+
+# Run dmenu
+"dmenu_run"
+   Mod4 + d
+
+# Run xterm
+"xterm"
+   Mod4 + Return
