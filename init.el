@@ -98,7 +98,9 @@
 ;; Setups
 (setq inhibit-startup-screen t)
 (tool-bar-mode -1)
+(scroll-bar-mode -1)
 (tab-bar-mode t)
+(fringe-mode 0)
 (setq frame-title-format "%b - Emacs")
 (setq visible-bell nil
       ring-bell-function #'ignore)
