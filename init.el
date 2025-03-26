@@ -51,19 +51,9 @@
  '(custom-safe-themes '(default))
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(undo-fu-session undo-fu auto-olivetti diogenes yasnippet-snippets
-		     which-key undo-tree treesit-auto racket-mode
-		     quelpa-use-package quack proof-general pdf-tools
-		     paredit org-roam olivetti no-littering
-		     multi-vterm magit j-mode ivy git-timemachine
-		     ggtags exec-path-from-shell dtrt-indent delight
-		     company-quickhelp company-go company-ghci
-		     company-coq company-anaconda auto-compile))
+   '(undo-fu-session undo-fu auto-olivetti diogenes yasnippet-snippets which-key undo-tree treesit-auto racket-mode quelpa-use-package quack proof-general pdf-tools paredit org-roam olivetti no-littering multi-vterm magit j-mode ivy git-timemachine ggtags exec-path-from-shell dtrt-indent delight company-quickhelp company-go company-ghci company-coq company-anaconda auto-compile))
  '(quack-programs
-   '("chez-scheme" "chezscheme" "chicken-csi" "chez" "bigloo" "csi"
-     "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -"
-     "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket"
-     "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))
+   '("chez-scheme" "chezscheme" "chicken-csi" "chez" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))
  '(quack-smart-open-paren-p nil)
  '(tab-bar-mode t)
  '(tool-bar-mode nil))
@@ -113,34 +103,39 @@
 (setq visible-bell nil
       ring-bell-function #'ignore)
 
-;; disable color
-(global-font-lock-mode -1) ;; Disable syntax highlighting everywhere
-(mapc #'disable-theme custom-enabled-themes) ;; Remove all themes
-(setq frame-background-mode nil) ;; Prevent Emacs from auto-detecting a color scheme
-(setq term-default-bg-color nil)
-(setq term-default-fg-color nil)
+;; Define my-mono-face-set function.
+;; If arg is nil, then do nothing.
+;; If arg is other than nil, then make emacs (almost) monochrome.
 
-;; Override faces to ensure they're plain
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((((type tty))) (t (:foreground "black" :background "white"))))
- '(font-lock-builtin-face ((t (:foreground "black"))))
- '(font-lock-comment-face ((t (:foreground "black"))))
- '(font-lock-constant-face ((t (:foreground "black"))))
- '(font-lock-function-name-face ((t (:foreground "black"))))
- '(font-lock-keyword-face ((t (:foreground "black"))))
- '(font-lock-string-face ((t (:foreground "black"))))
- '(font-lock-type-face ((t (:foreground "black"))))
- '(font-lock-variable-name-face ((t (:foreground "black"))))
- '(minibuffer-prompt ((t (:foreground "black" :background "white")))))
+(defun my-mono-face-set (arg)
+  (when arg
+    ;; disable color
+    (global-font-lock-mode -1) ;; Disable syntax highlighting everywhere
+    (mapc #'disable-theme custom-enabled-themes) ;; Remove all themes
+    (setq frame-background-mode nil) ;; Prevent Emacs from auto-detecting a color scheme
+    (setq term-default-bg-color nil)
+    (setq term-default-fg-color nil)
+
+    ;; Override faces to ensure they're plain
+    (custom-set-faces
+     '(default ((((type tty))) (t (:foreground "black" :background "white"))))
+     '(font-lock-builtin-face ((t (:foreground "black"))))
+     '(font-lock-comment-face ((t (:foreground "black"))))
+     '(font-lock-constant-face ((t (:foreground "black"))))
+     '(font-lock-function-name-face ((t (:foreground "black"))))
+     '(font-lock-keyword-face ((t (:foreground "black"))))
+     '(font-lock-string-face ((t (:foreground "black"))))
+     '(font-lock-type-face ((t (:foreground "black"))))
+     '(font-lock-variable-name-face ((t (:foreground "black"))))
+     '(minibuffer-prompt ((t (:foreground "black" :background "white")))))))
+
+(my-mono-face-set nil)
 
 ;; Numbering Lines
-;; (global-display-line-numbers-mode t)
+(setq line-number-display-limit nil)
+(global-display-line-numbers-mode t)
 (column-number-mode t)
-;; (size-indication-mode t)
+(size-indication-mode t)
 
 ;; Enable y/n answers
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -220,6 +215,22 @@
 ;; Packages
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
+
+(use-package modus-themes
+  :ensure t
+  :demand t
+  :config
+  ;; Add all your customizations prior to loading the themes
+  (setq modus-themes-italic-constructs nil
+        modus-themes-bold-constructs nil)
+
+  ;; Maybe define some palette overrides, such as by using our presets
+  (setq modus-themes-common-palette-overrides
+        modus-themes-preset-overrides-intense)
+
+  ;; Load the theme of your choice.
+  (load-theme 'modus-operandi :no-confirm)
+  :bind ("<f5>" . modus-themes-toggle))
 
 (use-package dtrt-indent
   :ensure t
@@ -604,3 +615,9 @@
 
 (setq gc-cons-threshold (* 2 1000 1000))
 
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
