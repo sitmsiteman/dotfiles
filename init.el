@@ -199,7 +199,6 @@
             (lambda ()
 	      (interactive)
               (insert "ō")))
-(add-hook 'text-mode-hook #'auto-fill-mode)
 
 ;; Define abbreviation
 ;; 
