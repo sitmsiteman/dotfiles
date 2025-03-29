@@ -93,6 +93,7 @@
 
 ;; Korean inputs
 (setq default-input-method "korean-hangul")
+(global-unset-key (kbd "<Hangul>"))
 (global-set-key (kbd "<Hangul>") 'toggle-input-method)
 
 ;; Setups
