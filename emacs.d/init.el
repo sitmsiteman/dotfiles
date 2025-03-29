@@ -429,7 +429,7 @@
   (add-to-list 'auto-mode-alist '("\\.ij[rstp]$" . j-mode)))
 
 (use-package eglot
-  :straight nil
+  :straight (:type built-in)
   :config
   ;; make sure trailing white spaces are only shown in programming mode.
   ;; I don't use emacs to edit my mails, so it is sufficient (atm).
@@ -487,12 +487,11 @@
              diogenes-beta-to-utf8))
 
 (use-package org
-  :straight nil
+  :straight (:type built-in)
   :bind
   (("C-c C--" . org-mark-ring-goto)))
 
 (use-package org-roam
-  
   :init
   (setq org-roam-v2-ack t)
   :custom
