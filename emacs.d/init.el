@@ -38,7 +38,7 @@
  '(quack-programs
    '("chez-scheme" "chezscheme" "chicken-csi" "chez" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))
  '(quack-smart-open-paren-p nil)
- '(tab-bar-mode t)
+ '(tab-bar-mode nil)
  '(tool-bar-mode nil))
 
 ;; Font setups for Windows-NT / *nix
