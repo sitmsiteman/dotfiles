@@ -16,6 +16,10 @@ setxkbmap -layout kr -variant kr104
 export LANG=ko_KR.UTF-8
 export LC_ALL=ko_KR.UTF-8
 
+export QT_IM_MODULE=ibus
+export IBUS_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+
 ibus-daemon -drRx
 
 export PATH="$PATH:$HOME/bin:$HOME/go/bin"
