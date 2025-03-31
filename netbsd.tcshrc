@@ -1,0 +1,40 @@
+# vi: set tabstop=4
+
+alias	h	'history 25'
+alias	j	'jobs -l'
+alias 	la	'ls -a'
+alias 	lf	'ls -FA'
+alias	ll	'ls -lA'
+
+umask 22
+
+set path = (/bin /sbin /usr/bin /usr/sbin /usr/X11R7/bin /usr/pkg/bin /usr/pkg/sbin /usr/games /usr/local/bin /usr/local/sbin $HOME/bin)
+
+setenv	EDITOR	vi
+setenv	VISUAL	vi
+setenv	PAGER	less
+setenv	LC_ALL	en_US.UTF-8
+
+if ($?prompt) then
+	set prompt = "; "
+	set ignoreeof
+	set filec
+	set history = 5000
+	set savehist = (5000 merge)
+	set mail = (/var/mail/$USER)
+	set nobeep
+	set correct = cmd
+	set autoexpand
+	set autolist = ambiguous
+	set complete = enhance
+
+	if ($?tcsh) then
+		bindkey "^W"	backward-delete-word
+		bindkey -k up	history-search-backward
+		bindkey -k down	history-search-forward
+	endif
+
+	source ~/.complete
+
+endif
+
