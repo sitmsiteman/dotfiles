@@ -28,7 +28,7 @@ if ($?prompt) then
 	set autoexpand
 	set autolist = ambiguous
 	set complete = enhance
-	set autorehash
+	set autorehash = always
 
 	if ($?tcsh) then
 		bindkey "^W"	backward-delete-word
