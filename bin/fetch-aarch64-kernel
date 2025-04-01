@@ -1,0 +1,12 @@
+#!/bin/sh
+
+ftp https://nycdn.netbsd.org/pub/NetBSD-daily/HEAD/latest/evbarm-aarch64/binary/kernel/netbsd-GENERIC64.gz
+ftp https://nycdn.netbsd.org/pub/NetBSD-daily/HEAD/latest/evbarm-aarch64/binary/kernel/SHA512
+shasum --ignore-missing -c SHA512
+
+if [ $? -gt 0 ]; then
+	echo "CHECKSUM MATCH ERROR."
+	exit 1
+fi
+
+gunzip netbsd-GENERIC64.gz

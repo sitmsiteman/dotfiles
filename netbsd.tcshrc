@@ -5,6 +5,7 @@ alias	j	'jobs -l'
 alias 	la	'ls -a'
 alias 	lf	'ls -FA'
 alias	ll	'ls -lA'
+alias	bigcpu	'schedctl -A 4,5'
 
 umask 22
 
@@ -35,6 +36,7 @@ if ($?prompt) then
 	endif
 
 	source ~/.complete
+	uncomplete cp
 
 endif
 
