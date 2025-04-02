@@ -35,9 +35,6 @@
  '(column-number-mode t)
  '(custom-safe-themes '(default))
  '(inhibit-startup-screen t)
- '(quack-programs
-   '("chez-scheme" "chezscheme" "chicken-csi" "chez" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))
- '(quack-smart-open-paren-p nil)
  '(tab-bar-mode nil)
  '(tool-bar-mode nil))
 
@@ -200,7 +197,6 @@
 ;; Packages
 
 (use-package modus-themes
-  
   :demand t
   :config
   ;; Add all your customizations prior to loading the themes
@@ -216,7 +212,6 @@
   :bind ("<f5>" . modus-themes-toggle))
 
 (use-package dtrt-indent
-  
   :commands (dtrt-indent-global-mode
              dtrt-indent-mode
              dtrt-indent-adapt
@@ -227,39 +222,33 @@
   (dtrt-indent-global-mode))
 
 (use-package racket-mode
-  
   :config
+  (add-hook 'scheme-mode-hook #'racket-mode)
   (add-hook 'racket-mode-hook #'racket-xp-mode)
+  (add-to-list 'auto-mode-alist '("\\.scm\\'" . racket-mode))
   (add-to-list 'auto-mode-alist '("\\.rkt\\'" . racket-mode)))
 
 (use-package auto-compile
-  
   :config
   (auto-compile-on-load-mode)
   (auto-compile-on-save-mode))
 
-(use-package delight
-  )
+(use-package delight)
 
-(use-package ielm
-  )
+(use-package ielm)
 
 (use-package magit
-  
   :bind (("C-x g" . magit-status)))
 
 (use-package git-timemachine
-  
   :bind (("s-g" . git-timemachine)))
 
 (use-package exec-path-from-shell
-  
   :config
   (when (memq window-system '(mac ns))
     (exec-path-from-shell-initialize)))
 
 (use-package undo-fu
-  
   :delight undo-fu-mode
   :config
   (global-unset-key (kbd "C-z"))
@@ -267,7 +256,6 @@
   (global-set-key (kbd "C-S-z") 'undo-fu-only-redo))
 
 (use-package undo-fu-session
-  
   :after
   undo-fu
   :config
@@ -277,33 +265,12 @@
 
 (undo-fu-session-global-mode)
 
-(use-package which-key
-  
+(use-package which-key  
   :delight which-key-mode
   :config
   (which-key-mode 1))
 
-(use-package quack
-  :straight (:host  github
-	     :repo "sitmsiteman/quack"
-	     :branch "testing")
-  
-  :config
-  (setq quack-programs '("chezscheme" "chicken-csi" "chez" "bigloo" "csi"
-			      "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -"
-			      "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket"
-			      "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))
-  ;; Scheme program
-  (setq my-quack-chez-executables (list "chez" "chezscheme" "scheme"
-  					"chez-scheme" "petite"))
-  (defun my-quack-find-chez-executables (my-quack-executables)
-    (cl-find-if #'executable-find my-quack-executables))
-  (setq quack-default-program
-	(my-quack-find-chez-executables my-quack-chez-executables))
-  (setq quack-fontify-style 'emacs))
-
 (use-package paredit
-  
   :delight paredit-mode
   :config
   (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
@@ -324,7 +291,6 @@
   (define-key paredit-mode-map (kbd "RET") nil))
 
 (use-package ivy
-  
   :delight ivy-mode
   :config
   (ivy-mode 1)
@@ -336,29 +302,20 @@
   (setq ivy-count-format "(%d/%d) "))
 
 (use-package ggtags
-  
   :config
   (add-hook 'c-ts-mode-hook
             (lambda ()
               (when (derived-mode-p 'c-ts-mode 'c++-ts-mode 'java-mode)
 		(ggtags-mode 1)))))
 
-(use-package yasnippet
-  
-  :config
-  (use-package yasnippet-snippets
-    )
-  (yas-reload-all)
-  (yas-global-mode 1)
-  (global-set-key (kbd "C-c y") 'company-yasnippet))
-
 (defun knf-style-wip()
   `(((node-is ")") parent-bol 0)
-    ((match nil "argument_list" nil 1 1) parent-bol c-ts-mode-indent-offset)
+    ((match nil "argument_list" nil 1 1)
+     parent-bol c-ts-mode-indent-offset)
     ((parent-is "argument_list") prev-sibling 0)
-    ((match nil "parameter_list" nil 1 1) parent-bol c-ts-mode-indent-offset)
+    ((match nil "parameter_list" nil 1 1)
+     parent-bol c-ts-mode-indent-offset)
     ((parent-is "parameter_list") prev-sibling 0)
-
     ,@(alist-get 'bsd (c-ts-mode--indent-styles 'c))))
 
 (use-package c-ts-mode
@@ -372,7 +329,6 @@
   (add-to-list 'major-mode-remap-alist '(c-or-c++-mode . c-or-c++-ts-mode)))
 
 (use-package company
-  
   :delight company-mode
   :config
   (add-hook 'after-init-hook 'global-company-mode)
@@ -388,43 +344,34 @@
         ("M->". company-select-last)))
 
 (use-package company-quickhelp
-  
   :config
   (company-quickhelp-mode))
 
 (use-package anaconda-mode
-  
   :config
   (add-hook 'python-ts-mode-hook #'anaconda-mode))
 
 (use-package company-anaconda
-  
   :config
   (add-to-list 'company-backends '(company-anaconda :with company-capf)))
 
-(use-package proof-general
-  )
+(use-package proof-general)
 
 (use-package company-coq
-  
   :config
   (add-hook 'coq-mode-hook #'company-coq-mode))
 
 (use-package company-go
-  
   :config
   (add-hook 'go-ts-mode-hook #'company-go-mode))
 
-(use-package company-ghci
-  
+(use-package company-ghci  
   :config
   (add-hook 'haskell-ts-mode-hook #'company-ghci-mode))
 
-(use-package haskell-mode
-  )
+(use-package haskell-mode)
 
 (use-package j-mode
-  
   :config
   (add-to-list 'auto-mode-alist '("\\.ij[rstp]$" . j-mode)))
 
@@ -449,12 +396,9 @@
   (add-hook 'racket-mode-hook 'eglot-ensure))
 
 (use-package treesit-auto
-  
   :config
   (setq treesit-auto-install 'prompt)
   (global-treesit-auto-mode))
-
-;; Use diogenes.el package to manipulate classical texts in emacs directly.
 
 (use-package diogenes
   :straight (diogenes :host github
@@ -512,7 +456,6 @@
   (org-roam-db-autosync-mode))
 
 (use-package olivetti
-  
   :config
   (setq olivetti-style 'fancy)
   :custom
@@ -529,23 +472,20 @@
 	       diogenes-corpus-mode diogenes-corpus-edit-mode
 	       diogenes-analysis-mode diogenes-lookup-mode)))
 
-;; Packages for non-windows systems
+;; Packages for only non-windows systems
 
 (when (not (eq system-type 'windows-nt))
     (use-package vterm
-      
       :commands vterm
       :config
       (setq vterm-max-scrollback 10000))
     (use-package multi-vterm
-      
       :requires vterm))
 
 ;; pdf-tools needs some tweak for windows...
 
 (if (eq system-type 'windows-nt)
     (use-package pdf-tools
-      
       :init
       (setenv "PATH" (concat "C:\\msys64\\mingw64\\bin" ";" (getenv "PATH")))
       :mode  ("\\.pdf\\'" . pdf-view-mode)
@@ -554,13 +494,12 @@
       (pdf-tools-install :no-query)
       )
       (use-package pdf-tools
-      
       :mode  ("\\.pdf\\'" . pdf-view-mode)
       :custom
       (pdf-tools-install :no-query)))
 
+;; Unused Packages
 ;; (use-package pretty-mode
-;;   
 ;;   :config
 ;;   (add-hook 'scheme-mode-hook #'pretty-mode)
 ;;   (add-hook 'lisp-mode-hook #'pretty-mode)
@@ -568,10 +507,40 @@
 ;;   (add-hook 'inferior-scheme-mode-hook #'pretty-mode)
 ;;   (global-pretty-mode 1)
 ;;   (global-prettify-symbols-mode t))
+;;
+;; (use-package yasnippet
+;;   :config
+;;   (use-package yasnippet-snippets
+;;     )
+;;   (yas-reload-all)
+;;   (yas-global-mode 1)
+;;   (global-set-key (kbd "C-c y") 'company-yasnippet))
+;;
+;; (use-package quack
+;;   :straight (:host  github
+;; 	     :repo "sitmsiteman/quack"
+;; 	     :branch "testing")
+;;   :config
+;; (custom-set-variables
+;; '(quack-programs
+;;    '("chez-scheme" "chezscheme" "chicken-csi" "chez" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))
+;;  '(quack-smart-open-paren-p nil)
+;;  )
+;;   (setq quack-programs '("chezscheme" "chicken-csi" "chez" "bigloo" "csi"
+;; 			      "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -"
+;; 			      "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket"
+;; 			      "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))
+;;   ;; Scheme program
+;;   (setq my-quack-chez-executables (list "chez" "chezscheme" "scheme"
+;;   					"chez-scheme" "petite"))
+;;   (defun my-quack-find-chez-executables (my-quack-executables)
+;;     (cl-find-if #'executable-find my-quack-executables))
+;;   (setq quack-default-program
+;; 	(my-quack-find-chez-executables my-quack-chez-executables))
+;;   (setq quack-fontify-style 'emacs))
 
 ;; Themes
-;; (use-package acme-theme
-;;   
+;; (use-package acme-theme  
 ;;   :config
 ;;   (load-theme 'acme t)
 ;;   (setq acme-theme-black-fg t)
@@ -594,10 +563,3 @@
 ;;   (enable-theme 'acme))
 
 (setq gc-cons-threshold (* 2 1000 1000))
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
