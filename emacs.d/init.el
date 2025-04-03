@@ -454,6 +454,7 @@
       :custom
       (pdf-info-epdfinfo-program "C:\\msys64\\mingw64\\bin\\epdfinfo.exe")
       :config
+      (setq pdf-view-use-scaling nil)
       (defun my-pdf-view-disable-modes ()
 	(display-line-numbers-mode -1))
       (pdf-tools-install :no-query)
@@ -461,6 +462,7 @@
   (use-package pdf-tools
 	:magic  ("%PDF" . pdf-view-mode)
 	:config
+	(setq pdf-view-use-scaling nil)
 	(defun my-pdf-view-disable-modes ()
 	  (display-line-numbers-mode -1))
 	(pdf-tools-install :no-query)
