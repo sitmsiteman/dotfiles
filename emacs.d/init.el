@@ -488,15 +488,21 @@
     (use-package pdf-tools
       :init
       (setenv "PATH" (concat "C:\\msys64\\mingw64\\bin" ";" (getenv "PATH")))
-      :mode  ("\\.pdf\\'" . pdf-view-mode)
+      :magic  ("%PDF" . pdf-view-mode)
       :custom
       (pdf-info-epdfinfo-program "C:\\msys64\\mingw64\\bin\\epdfinfo.exe")
+      :config
+      (defun my-pdf-view-disable-modes ()
+	(display-line-numbers-mode -1))
       (pdf-tools-install :no-query)
-      )
-      (use-package pdf-tools
-      :mode  ("\\.pdf\\'" . pdf-view-mode)
-      :custom
-      (pdf-tools-install :no-query)))
+      (add-hook 'pdf-view-mode-hook 'my-pdf-view-disable-modes))
+  (use-package pdf-tools
+	:magic  ("%PDF" . pdf-view-mode)
+	:config
+	(defun my-pdf-view-disable-modes ()
+	  (display-line-numbers-mode -1))
+	(pdf-tools-install :no-query)
+	(add-hook 'pdf-view-mode-hook 'my-pdf-view-disable-modes)))
 
 ;; Unused Packages
 ;; (use-package pretty-mode
