@@ -30,8 +30,10 @@ fcitx5 -d
 
 xclock -geometry 80x80-0+0 &
 xss-lock --transfer-sleep-lock i3lock &
+xbatt -geometry +0-0 &
 xbindkeys &
 telegram-desktop &
+xterm -geometry 80x24+0+0 &
 dunst &
 
 exec fvwm
