@@ -1,7 +1,3 @@
-(setq gc-cons-threshold (* 50 1000 1000))
-
-(setq load-prefer-newer t)
-
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name
@@ -30,13 +26,6 @@
 
 (setq native-comp-deferred-compilation-deny-list '())
 (setq native-comp-async-report-warnings-errors nil)
-
-(custom-set-variables
- '(column-number-mode t)
- '(custom-safe-themes '(default))
- '(inhibit-startup-screen t)
- '(tab-bar-mode nil)
- '(tool-bar-mode nil))
 
 ;; Font setups for Windows-NT / *nix
 
@@ -76,16 +65,6 @@
 (global-unset-key (kbd "<Hangul>"))
 (global-set-key (kbd "<Hangul>") 'toggle-input-method)
 
-;; Setups
-(setq inhibit-startup-screen t)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(tab-bar-mode t)
-(fringe-mode 0)
-(setq frame-title-format "%b - Emacs")
-(setq visible-bell nil
-      ring-bell-function #'ignore)
-
 ;; Define my-mono-face-set function.
 ;; If arg is nil, then do nothing.
 ;; If arg is other than nil, then make emacs (almost) monochrome.
@@ -114,16 +93,6 @@
 
 (my-mono-face-set nil)
 
-;; Numbering Lines
-(setq line-number-display-limit nil)
-(global-display-line-numbers-mode t)
-(column-number-mode t)
-(size-indication-mode t)
-
-;; Enable y/n answers
-(fset 'yes-or-no-p 'y-or-n-p)
-;; Deprecated
-;; (defalias 'yes-or-no #'y-or-n-p)
 
 ;; Set major mode from file name
 (setq-default major-mode
@@ -131,13 +100,6 @@
                 (unless buffer-file-name
                   (let ((buffer-file-name (buffer-name)))
                     (set-auto-mode)))))
-
-;; Window options
-(setq window-resize-pixelwise t)
-(setq frame-resize-pixelwise t)
-(setq frame-inhibit-implied-resize t)
-(setq pixel-scroll-precision-mode t)
-; (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
 ;; Backups
 (make-directory "~/.emacs_backups/" t)
@@ -568,4 +530,4 @@
 ;; 	 `(tab-line-tab-modified  ((nil (:foreground ,fg :slant italic :background ,acme-blue-light))))))
 ;;   (enable-theme 'acme))
 
-(setq gc-cons-threshold (* 2 1000 1000))
+(provide 'init)
