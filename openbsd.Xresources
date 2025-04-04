@@ -23,6 +23,7 @@ xterm*visualBell: 		false
 xterm*utf8:			true
 xterm*title:			xterm
 xterm*allowTitleOps:		false
+xterm*deleteIsDEL:		false
 
 
 ! Font setups
