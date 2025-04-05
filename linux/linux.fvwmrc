@@ -37,6 +37,7 @@ Style "*"           DecorateTransient, NoPPosition
 Style "*"           IconBox 0 -10 -280 -1
 Style "*"           FocusFollowsMouse
 Style "*"           RandomPlacement, SmartPlacement
+Style "*"	    ResizeHintOverride
 
 # Styles for various Fvwm modules:
 Style "Fvwm*"       NoTitle,  Sticky, WindowListSkip
@@ -66,7 +67,7 @@ Style "xgraph"      Icon graphs.xpm, RandomPlacement, ClickToFocus
 Style "xmosaic"     Color Green/Yellow, ClickToFocus
 Style "xconsole"    Icon rterm.xpm, WindowListSkip, Sticky
 # Style "*Telegram*"  MWMButtons,MWMBorder,MWMDecor,Title
-Style "xbatt"       NoTitle, NoHandles, Sticky, WindowListSkip, NoButton
+Style "stalonetray"  NoTitle, NoHandles, Sticky, WindowListSkip, NoButton
 
 
 # some simple default key bindings:

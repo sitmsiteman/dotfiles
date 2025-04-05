@@ -16,14 +16,18 @@ setxkbmap -layout kr -variant kr104
 export LANG=ko_KR.UTF-8
 export LC_ALL=ko_KR.UTF-8
 
-export QT_IM_MODULE=ibus
-export IBUS_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=fcitx
+export IBUS_IM_MODULE=fcitx	
+export XMODIFIERS=@im=fcitx
 
-ibus-daemon -drRx
+fcitx5 -d
 
 export PATH="$PATH:$HOME/bin:$HOME/go/bin"
 
+pkill xss-lock
+
+stalonetray -geometry 1x1-0+100 -t --grow-gravity E &
+xclock -geometry 80x80-0+0 &
 xss-lock --transfer-sleep-lock i3lock &
 xbindkeys &
 udiskie &
@@ -31,6 +35,7 @@ cbatticon &
 volumeicon &
 telegram-desktop &
 dunst &
+xterm -geometry +0+0 &
 
 exec fvwm
 # exec i3
