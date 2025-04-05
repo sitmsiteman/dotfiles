@@ -1,0 +1,35 @@
+Xft.dpi:			96
+Xft.antialias:			true
+Xft.rgba:			rgb
+Xft.hinting:			false
+Xft.hintstyle:			hintslight
+
+! Terminal Setups
+
+xterm*termName:			xterm-256color
+xterm*selectToClipboard:	true
+xterm*metaSendsEscape:		true
+xterm*rightScrollBar:		false
+xterm*scrollBar:		false
+xterm*inputMethod:		fcitx
+xterm*preeditType:		OverTheSpot,Root
+xterm*geometry:			80x24
+xterm*internalBorder:		6
+xterm*cursorBlink:		false
+xterm*cursorUnderline:		false
+xterm*saveLines:		40000
+xterm*reverseVideo:		true
+xterm*visualBell: 		false
+xterm*utf8:			true
+xterm*title:			xterm
+xterm*allowTitleOps:		false
+xterm*deleteIsDEL:		false
+
+
+! Font setups
+
+xterm*faceName:			DejaVu Sans Mono:antialias=true
+xterm*faceNameDoublesize:	Noto Sans Mono CJK KR:antialias=true
+xterm*faceSize:			12
+xterm*allowBoldFonts:	  	false
+
