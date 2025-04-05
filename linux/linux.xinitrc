@@ -26,11 +26,10 @@ export PATH="$PATH:$HOME/bin:$HOME/go/bin"
 
 xss-lock --transfer-sleep-lock i3lock &
 xbindkeys &
-# udiskie &
-# cbatticon &
-# volumeicon &
-# telegram-desktop &
-xbattbar &
+udiskie &
+cbatticon &
+volumeicon &
+telegram-desktop &
 dunst &
 
 exec fvwm

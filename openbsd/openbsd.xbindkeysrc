@@ -1,0 +1,7 @@
+# Run dmenu
+"dmenu_run"
+   Mod4 + d
+
+# Run xterm
+"xterm"
+   Mod4 + Return
