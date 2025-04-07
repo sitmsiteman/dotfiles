@@ -28,6 +28,11 @@ export XMODIFIERS=@im=fcitx
 
 fcitx5 -d
 
+pkill xss-lock
+xcompmgr &
+
+[ -f $HOME/.fehbg ] && $HOME/.fehbg
+
 xclock -geometry 80x80-0+0 &
 xss-lock --transfer-sleep-lock i3lock &
 xbatt -geometry +0-0 &
