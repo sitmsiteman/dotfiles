@@ -33,6 +33,7 @@ xcompmgr &
 
 [ -f $HOME/.fehbg ] && $HOME/.fehbg
 
+stalonetray -geometry 1x1-0+100 -t --grow-gravity E &
 xclock -geometry 80x80-0+0 &
 xss-lock --transfer-sleep-lock i3lock &
 xbatt -geometry +0-0 &

@@ -25,6 +25,9 @@ fcitx5 -d
 export PATH="$PATH:$HOME/bin:$HOME/go/bin"
 
 pkill xss-lock
+xcompmgr &
+
+[ -f $HOME/.fehbg ] && $HOME/.fehbg
 
 stalonetray -geometry 1x1-0+100 -t --grow-gravity E &
 xclock -geometry 80x80-0+0 &
@@ -38,4 +41,3 @@ dunst &
 xterm -geometry +0+0 &
 
 exec fvwm
-# exec i3
