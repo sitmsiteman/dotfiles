@@ -16,12 +16,12 @@ xterm*scrollBar:		false
 xterm*inputMethod:		fcitx
 xterm*preeditType:		OverTheSpot,Root
 ! xterm*geometry:		80x24
-xterm*geometry:			
+xterm*geometry:
 xterm*internalBorder:		6
 xterm*cursorBlink:		false
 xterm*cursorUnderline:		false
 xterm*saveLines:		40000
-xterm*reverseVideo:		false
+xterm*reverseVideo:		true
 xterm*visualBell: 		false
 xterm*utf8:			true
 xterm*title:			xterm
@@ -31,8 +31,9 @@ xterm*deleteIsDEL:		false
 
 ! Font setups
 
-xterm*faceName:			DejaVu Sans Mono
+! xterm*faceName:		DejaVu Sans Mono
+xterm*faceName:			Terminus
 xterm*faceNameDoublesize:	Noto Sans Mono CJK KR
-xterm*faceSize:			10
+xterm*faceSize:			12
 xterm*allowBoldFonts:	  	false
 
