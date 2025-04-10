@@ -8,6 +8,7 @@ fi
 
 . $HOME/.profile
 
+
 xset s on
 xset +dpms
 xset dpms 300 450 600
@@ -32,6 +33,7 @@ pkill xss-lock
 xcompmgr &
 
 [ -f $HOME/.fehbg ] && $HOME/.fehbg
+[ -f $HOME/bin/tp_pointer.sh ] && $HOME/bin/tp_pointer.sh
 
 stalonetray -geometry 1x1-0+100 -t --grow-gravity E &
 xclock -geometry 80x80-0+0 &
