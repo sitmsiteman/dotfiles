@@ -17,7 +17,7 @@ export LANG=ko_KR.UTF-8
 export LC_ALL=ko_KR.UTF-8
 
 export QT_IM_MODULE=fcitx
-export IBUS_IM_MODULE=fcitx	
+export GTK_IM_MODULE=fcitx	
 export XMODIFIERS=@im=fcitx
 
 fcitx5 -d
