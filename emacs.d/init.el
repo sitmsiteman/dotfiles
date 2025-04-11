@@ -15,7 +15,7 @@
   (load bootstrap-file nil 'nomessage))
 
 (straight-use-package 'use-package)
-(setq straight-use-package-by-default t) 
+(setq straight-use-package-by-default t)
 
 (use-package el-patch)
 
@@ -375,14 +375,14 @@
    (interactive)
    (setq buffer-face-mode-face '(:family "Gentium Plus" :height 140))
    (buffer-face-mode))
-  
+
   (add-hook 'diogenes-browser-mode-hook 'my-diogenes-greek-face)
   (add-hook 'diogenes-lookup-mode-hook 'my-diogenes-greek-face)
   (add-hook 'diogenes-analysis-mode-hook 'my-diogenes-greek-face)
   (add-hook 'diogenes-search-mode-hook 'my-diogenes-greek-face)
   (add-hook 'diogenes-corpus-mode-hook 'my-diogenes-greek-face)
   (add-hook 'diogenes-corpus-edit-mode-hook 'my-diogenes-greek-face)
-  
+
   :bind (("C-c C-d g" . diogenes)
 	 (:map diogenes-browser-mode-map
 	       (("C-c C-d w" . diogenes-parse-greek))))
@@ -396,6 +396,17 @@
   :straight (:type built-in)
   :bind
   (("C-c C--" . org-mark-ring-goto)))
+
+(use-package ispell
+  :straight (:type built-in)
+  :config
+  (setq ispell-program-name "hunspell")
+  (setq ispell-dictionary "en_US,en_GB")
+  (setq ispell-personal-dictionary "~/.hunspell_personal")
+  (ispell-set-spellchecker-params)
+  (ispell-hunspell-add-multi-dic "en_US,en_GB")
+  (unless (file-exists-p ispell-personal-dictionary)
+    (write-region "" nil ispell-personal-dictionary nil 0)))
 
 (use-package org-roam
   :init
