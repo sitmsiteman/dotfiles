@@ -69,79 +69,87 @@
 ;; If arg is nil, then do nothing.
 ;; If arg is other than nil, then make emacs (almost) monochrome.
 
-(defun my-mono-face-set (arg)
-  (when arg
-    ;; disable color
-    (global-font-lock-mode -1) ;; Disable syntax highlighting everywhere
-    (mapc #'disable-theme custom-enabled-themes) ;; Remove all themes
-    (setq frame-background-mode nil) ;; Prevent Emacs from auto-detecting a color scheme
-    (setq term-default-bg-color nil)
-    (setq term-default-fg-color nil)
+(use-package emacs
+  :straight (:type built-in)
+  :config
+  
+  (defun my-mono-face-set (arg)
+    (when arg
+      ;; disable color
+      (global-font-lock-mode -1) ;; Disable syntax highlighting everywhere
+      (mapc #'disable-theme custom-enabled-themes) ;; Remove all themes
+      (setq frame-background-mode nil) ;; Prevent Emacs from auto-detecting a color scheme
+      (setq term-default-bg-color nil)
+      (setq term-default-fg-color nil)
 
-    ;; Override faces to ensure they're plain
-    (custom-set-faces
-     '(default ((((type tty))) (t (:foreground "black" :background "white"))))
-     '(font-lock-builtin-face ((t (:foreground "black"))))
-     '(font-lock-comment-face ((t (:foreground "black"))))
-     '(font-lock-constant-face ((t (:foreground "black"))))
-     '(font-lock-function-name-face ((t (:foreground "black"))))
-     '(font-lock-keyword-face ((t (:foreground "black"))))
-     '(font-lock-string-face ((t (:foreground "black"))))
-     '(font-lock-type-face ((t (:foreground "black"))))
-     '(font-lock-variable-name-face ((t (:foreground "black"))))
-     '(minibuffer-prompt ((t (:foreground "black" :background "white")))))))
+      ;; Override faces to ensure they're plain
+      (custom-set-faces
+       '(default ((((type tty))) (t (:foreground "black" :background "white"))))
+       '(font-lock-builtin-face ((t (:foreground "black"))))
+       '(font-lock-comment-face ((t (:foreground "black"))))
+       '(font-lock-constant-face ((t (:foreground "black"))))
+       '(font-lock-function-name-face ((t (:foreground "black"))))
+       '(font-lock-keyword-face ((t (:foreground "black"))))
+       '(font-lock-string-face ((t (:foreground "black"))))
+       '(font-lock-type-face ((t (:foreground "black"))))
+       '(font-lock-variable-name-face ((t (:foreground "black"))))
+       '(minibuffer-prompt ((t (:foreground "black" :background "white")))))))
 
-(my-mono-face-set nil)
-
-
-;; Set major mode from file name
-(setq-default major-mode
+  (my-mono-face-set nil)
+  (setq-default major-mode
               (lambda ()
                 (unless buffer-file-name
                   (let ((buffer-file-name (buffer-name)))
                     (set-auto-mode)))))
+  ;; Set major mode from file name
 
-;; Backups
-(make-directory "~/.emacs_backups/" t)
-(make-directory "~/.emacs_autosave/" t)
-(make-directory "~/.emacs.d/undo/" t)
-(setq backup-by-copying t)
-(setq auto-save-file-name-transforms '((".*" "~/.emacs_autosave/" t)))
-(setq backup-directory-alist '(("." . "~/.emacs_backups/")))
-(save-place-mode t)
-(savehist-mode t)
-(recentf-mode t)
+  ;; Backups
+  (make-directory "~/.emacs_backups/" t)
+  (make-directory "~/.emacs_autosave/" t)
+  (make-directory "~/.emacs.d/undo/" t)
+  (setq backup-by-copying t)
+  (setq auto-save-file-name-transforms '((".*" "~/.emacs_autosave/" t)))
+  (setq backup-directory-alist '(("." . "~/.emacs_backups/")))
+  (save-place-mode t)
+  (savehist-mode t)
+  (recentf-mode t)
 
-;; Sentences have a single space between them.
-(setq sentence-end-double-space nil)
+  ;; Sentences have a single space between them.
+  (setq sentence-end-double-space nil)
 
-;; require newline at the end of the file
-(setq require-final-newline t)
+  ;; require newline at the end of the file
+  (setq require-final-newline t)
 
-;; Tabs configuration
-(setq indent-tabs-mode nil)
+  ;; Tabs configuration
+  (setq indent-tabs-mode nil)
 
-;; quit Emacs directly even if there are running processes
-(setq confirm-kill-processes nil)
+  ;; quit Emacs directly even if there are running processes
+  (setq confirm-kill-processes nil)
 
-;; General coding style.
-(global-whitespace-mode 1)
-(global-font-lock-mode 1)
+  ;; General coding style.
+  (global-whitespace-mode 1)
+  (global-font-lock-mode 1)
 
-;; text replaces the selection if the selection is active
-(delete-selection-mode 1)
+  ;; text replaces the selection if the selection is active
+  (delete-selection-mode 1)
 
-;; Text-mode options
-;; shortcut for greek transliteration
-(define-key text-mode-map (kbd "C-c C-r") #'fill-region)
-(define-key text-mode-map (kbd "C-c C-e")
-            (lambda ()
-	      (interactive)
-              (insert "ē")))
-(define-key text-mode-map (kbd "C-c C-o")
-            (lambda ()
-	      (interactive)
-              (insert "ō")))
+  ;; Text-mode options
+  ;; shortcut for greek transliteration
+  (define-key text-mode-map (kbd "C-c C-r") #'fill-region)
+  (define-key text-mode-map (kbd "C-c C-e")
+              (lambda ()
+		(interactive)
+		(insert "ē")))
+  (define-key text-mode-map (kbd "C-c C-o")
+              (lambda ()
+		(interactive)
+		(insert "ō")))
+
+  
+  ;; Lisp mode
+  (define-key emacs-lisp-mode-map (kbd "C-c C-c") #'eval-defun)
+  (define-key emacs-lisp-mode-map (kbd "C-c C-b") #'eval-buffer))
+
 
 ;; Define abbreviation
 ;; 
@@ -151,10 +159,6 @@
 ;; 	    (define-abbrev text-mode-abbrev-table "'e" "ē")
 ;;             (define-abbrev text-mode-abbrev-table "'o" "ō")))
 
-
-;; Lisp mode
-(define-key emacs-lisp-mode-map (kbd "C-c C-c") #'eval-defun)
-(define-key emacs-lisp-mode-map (kbd "C-c C-b") #'eval-buffer)
 
 ;; Packages
 
@@ -395,7 +399,9 @@
 (use-package org
   :straight (:type built-in)
   :bind
-  (("C-c C--" . org-mark-ring-goto)))
+  (("C-c C--" . org-mark-ring-goto))
+  :config
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0)))
 
 (use-package ispell
   :straight (:type built-in)
@@ -414,6 +420,11 @@
   :custom
   (org-roam-directory "~/Notes")
   (org-roam-completion-everywhere t)
+  (org-roam-capture-templates
+   '(("d" "default" plain
+      "%?"
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+STARTUP: latexpreview\n#+OPTIONS: tex:t\n")
+      :unnarrowed t)))
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . org-roam-node-find)
          ("C-c n i" . org-roam-node-insert)
@@ -426,7 +437,8 @@
   ("C-c n d" . org-roam-dailies-map)
   :config
   (require 'org-roam-dailies) ;; Ensure the keymap is available
-  (org-roam-db-autosync-mode))
+  (org-roam-db-autosync-mode)
+  )
 
 (use-package olivetti
   :config
@@ -478,6 +490,32 @@
 	  (display-line-numbers-mode -1))
 	(pdf-tools-install :no-query)
 	(add-hook 'pdf-view-mode-hook 'my-pdf-view-disable-modes)))
+
+(use-package auctex)
+
+(use-package hl-todo)
+
+(use-package tex
+  :straight (:type built-in)
+  :mode
+  ("\\.tex\\'" . latex-mode)
+  :hook
+  (LaTeX-mode . reftex-mode)      ;; enable referencing
+  (LaTeX-mode . turn-on-flyspell) ;; enable spellchecking
+  (LaTeX-mode . outline-indent-minor-mode) ;; enable folding
+  (LaTeX-mode . indent-bars-mode) ;; enable indentation highlighting
+  :init
+  (setq TeX-parse-self t ;; auto-parse tex file on load
+        TeX-auto-save t  ;; auto-parse tex file on save
+        TeX-master nil)  ;; always query for master file
+  (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
+  (add-hook 'TeX-update-style-hook 'hl-todo-mode) ;; fix for hl-todo-mode
+  :config
+  (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
+        TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
+        TeX-source-correlate-mode t
+        TeX-source-correlate-start-server t))
+
 
 ;; Unused Packages
 ;; (use-package pretty-mode
